@@ -2,55 +2,44 @@ package compose.photoapp
 
 import androidx.compose.Composable
 import androidx.compose.State
-import androidx.ui.core.Modifier
 import androidx.ui.foundation.AdapterList
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.layout.Column
-import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.padding
-import androidx.ui.material.Card
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Surface
-import androidx.ui.unit.dp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 import androidx.compose.collectAsState as composeCollectAsState
 
+@ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
 @Composable
 fun Feed(
-    photographers: StateFlow<List<Photographer>>,
-    onSelected: (Photographer) -> Unit,
-    modifier: Modifier = Modifier
+    photographersFlow: StateFlow<List<Photographer>>,
+    onSelected: (Photographer) -> Unit
 ) {
-    Surface(
-        modifier = modifier,
-        color = MaterialTheme.colors.onSurface,
-        contentColor = MaterialTheme.colors.surface
-    ) {
-        // TODO: remove Column when Surface uses it inside
-        Column(Modifier.padding(top = 32.dp)) {
-            Text(
-                text = "Hello,",
-                style = MaterialTheme.typography.body2,
-                modifier = Modifier.padding(start = 16.dp)
-            )
-            Text(
-                text = "Alice",
-                style = MaterialTheme.typography.h6,
-                modifier = Modifier.padding(start = 16.dp)
-            )
-            Card(title = "Your feed") {
-                AdapterList(
-                    data = photographers.collectAsState().value,
-                    modifier = Modifier.padding(top = 32.dp)
-                ) {
-                    FeedItem(photographer = it, onClick = { onSelected(it) })
-                }
+    val photographers = photographersFlow.collectAsState().value
+    AdapterList(
+        buildList {
+            add(FeedItem.Header)
+            addAll(photographers.map { FeedItem.PhotographerCard(it) })
+            if (size > 3) {
+                add(3, FeedItem.Ad)
             }
         }
+    ) {
+        when (it) {
+            is FeedItem.Header -> FeedHeader()
+            is FeedItem.Ad -> AdBanner()
+            is FeedItem.PhotographerCard ->
+                PhotographerCard(
+                    photographer = it.photographer,
+                    onClick = { onSelected(it.photographer) })
+
+        }
     }
+}
+
+private sealed class FeedItem {
+    object Header : FeedItem()
+    data class PhotographerCard(val photographer: Photographer) : FeedItem()
+    object Ad : FeedItem()
 }
 
 // TODO this function is a part of dev12 release, to remove once we migrate to this version

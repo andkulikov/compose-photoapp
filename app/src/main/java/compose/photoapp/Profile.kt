@@ -22,17 +22,19 @@ import androidx.ui.unit.*
 @Composable
 fun Profile(photographer: Photographer, modifier: Modifier = Modifier) {
     val padding = 16.dp
-
     Surface(
         modifier = modifier,
         color = MaterialTheme.colors.onSurface,
         contentColor = MaterialTheme.colors.surface
     ) {
         // TODO: remove Column when Surface uses it inside
-        Column(Modifier.padding(top = 32.dp)) {
+        Column(Modifier.padding(top = 24.dp)) {
             Header(photographer)
             Spacer(modifier = Modifier.weight(1f))
-            TagsList(photographer.tags, Modifier.padding(start = padding, top = padding))
+            TagsList(
+                photographer.tags,
+                Modifier.padding(top = padding, bottom = padding)
+            )
             PortfolioCard(groupedPhotos = photographer.photos)
         }
     }
@@ -83,8 +85,8 @@ private fun FollowerInfo(text: String, number: String) {
 @Composable
 private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
     HorizontalScroller(modifier = modifier) {
-        Row {
-            val padding = 8.dp
+        val padding = 8.dp
+        Row(Modifier.padding(start = padding * 2, end = padding)) {
             tags.forEach {
                 Text(
                     text = it,
@@ -106,15 +108,21 @@ private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
 @Composable
 private fun PortfolioCard(groupedPhotos: Map<String, List<Int>>) {
     val groups = groupedPhotos.keys.toList()
-    Card(title = "Portfolio") {
-        var selectedGroup by state { groups.first() }
-        Tab(
-            groups = groups,
-            selectedGroup = selectedGroup,
-            onSelected = { selectedGroup = groups.elementAt(it) }
-        )
-        Crossfade(current = selectedGroup) {
-            PhotosGrid(groupedPhotos[selectedGroup]!!)
+    RoundedHeader(title = "Portfolio")
+    Surface {
+        Column {
+            var selectedGroup by state { groups.first() }
+            Tab(
+                groups = groups,
+                selectedGroup = selectedGroup,
+                onSelected = { selectedGroup = groups.elementAt(it) }
+            )
+            Crossfade(current = selectedGroup) {
+                PhotosGrid(
+                    groupedPhotos[selectedGroup]!!,
+                    Modifier.padding(top = 8.dp, bottom = 16.dp)
+                )
+            }
         }
     }
 }

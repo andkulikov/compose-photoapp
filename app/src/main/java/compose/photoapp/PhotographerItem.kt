@@ -1,10 +1,11 @@
 package compose.photoapp
 
+import androidx.animation.LinearOutSlowInEasing
+import androidx.animation.TweenBuilder
 import androidx.compose.Composable
-import androidx.ui.core.Alignment
-import androidx.ui.core.ContentScale
-import androidx.ui.core.Modifier
-import androidx.ui.core.clip
+import androidx.compose.onActive
+import androidx.ui.animation.animatedFloat
+import androidx.ui.core.*
 import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
@@ -21,12 +22,18 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 
 @Composable
-fun FeedItem(photographer: Photographer, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun PhotographerCard(photographer: Photographer, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Clickable(onClick = onClick, modifier = modifier.ripple()) {
-        Column(Modifier.fillMaxWidth()) {
-            val padding = 16.dp
+        val padding = 16.dp
+        Column(
+            Modifier.padding(
+                top = padding / 2,
+                start = padding,
+                end = padding,
+                bottom = padding / 2
+            ).fillMaxWidth()
+        ) {
             Row(
-                Modifier.fillMaxWidth(),
                 verticalGravity = Alignment.CenterVertically
             ) {
                 Image(
@@ -47,12 +54,21 @@ fun FeedItem(photographer: Photographer, onClick: () -> Unit, modifier: Modifier
                     }
                 }
             }
+            Spacer(Modifier.size(padding))
+            val alpha = animatedFloat(0f)
+            onActive {
+                alpha.animateTo(1f, TweenBuilder<Float>().apply {
+                    duration = 300
+                    easing = LinearOutSlowInEasing
+                })
+            }
             Card(
-                Modifier.padding(top = padding, bottom = padding).fillMaxWidth(),
+                Modifier.fillMaxWidth(),
                 elevation = 4.dp
             ) {
                 Image(
                     imageResource(id = photographer.mainImage),
+                    Modifier.drawOpacity(alpha.value),
                     contentScale = ContentScale.Crop
                 )
             }
@@ -62,7 +78,7 @@ fun FeedItem(photographer: Photographer, onClick: () -> Unit, modifier: Modifier
 
 @Preview()
 @Composable
-fun FeedItemPreview() {
+fun PhotographerItemPreview() {
     val demoPhotographer = Photographer(
         "id",
         "Patricia Stevenson",
@@ -75,6 +91,6 @@ fun FeedItemPreview() {
         emptyMap()
     )
     MaterialTheme {
-        FeedItem(demoPhotographer, {})
+        PhotographerCard(demoPhotographer, {})
     }
 }
