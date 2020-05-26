@@ -11,8 +11,12 @@ import androidx.compose.onActive
 import androidx.compose.setValue
 import androidx.ui.animation.Crossfade
 import androidx.ui.core.*
+import androidx.ui.foundation.drawBackground
+import androidx.ui.graphics.RectangleShape
+import androidx.ui.graphics.painter.ImagePainter
 import androidx.ui.layout.*
 import androidx.ui.material.*
+import androidx.ui.res.imageResource
 import androidx.ui.savedinstancestate.savedInstanceState
 import androidx.ui.viewinterop.AndroidView
 import kotlinx.coroutines.ExperimentalCoroutinesApi

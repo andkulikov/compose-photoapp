@@ -26,7 +26,7 @@ fun FeedItem(photographer: Photographer, onClick: () -> Unit, modifier: Modifier
         Column(Modifier.fillMaxWidth()) {
             val padding = 16.dp
             Row(
-                Modifier.fillMaxWidth().padding(start = padding, top = padding, end = padding),
+                Modifier.fillMaxWidth(),
                 verticalGravity = Alignment.CenterVertically
             ) {
                 Image(
@@ -48,15 +48,11 @@ fun FeedItem(photographer: Photographer, onClick: () -> Unit, modifier: Modifier
                 }
             }
             Card(
-                Modifier.padding(padding)
-                    .fillMaxWidth(),
+                Modifier.padding(top = padding, bottom = padding).fillMaxWidth(),
                 elevation = 4.dp
             ) {
                 Image(
                     imageResource(id = photographer.mainImage),
-                    Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
                     contentScale = ContentScale.Crop
                 )
             }
@@ -72,7 +68,11 @@ fun FeedItemPreview() {
         "Patricia Stevenson",
         "3 minutes ago",
         R.drawable.ava1,
-        R.drawable.image1
+        R.drawable.image1,
+        "0",
+        "0",
+        emptyList(),
+        emptyMap()
     )
     MaterialTheme {
         FeedItem(demoPhotographer, {})
