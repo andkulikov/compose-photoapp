@@ -16,6 +16,7 @@ import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.res.imageResource
 import androidx.ui.res.loadImageResource
+import androidx.ui.savedinstancestate.savedInstanceState
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.*
 
@@ -111,22 +112,22 @@ private fun PortfolioCard(groupedPhotos: Map<String, List<Int>>) {
     RoundedHeader(title = "Portfolio")
     Surface {
         Column {
-            var selectedGroup by state { groups.first() }
+            var selectedGroup by savedInstanceState { groups.first() }
             Tab(
                 groups = groups,
                 selectedGroup = selectedGroup,
-                onSelected = { selectedGroup = groups.elementAt(it) }
+                onSelected = { selectedGroup = it }
             )
             PhotosGrid(
-                groupedPhotos[selectedGroup]!!,
-                Modifier.padding(top = 8.dp, bottom = 16.dp)
+                groupedPhotos.getValue(selectedGroup),
+                Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
             )
         }
     }
 }
 
 @Composable
-private fun Tab(groups: List<String>, selectedGroup: String, onSelected: (Int) -> Unit) {
+private fun Tab(groups: List<String>, selectedGroup: String, onSelected: (String) -> Unit) {
     TabRow(
         items = groups,
         selectedIndex = groups.indexOf(selectedGroup),
@@ -149,7 +150,7 @@ private fun Tab(groups: List<String>, selectedGroup: String, onSelected: (Int) -
         Tab(
             text = { Text(text = group, color = color) },
             selected = index == groups.indexOf(selectedGroup),
-            onSelected = { onSelected(index) },
+            onSelected = { onSelected(group) },
             activeColor = MaterialTheme.colors.surface
         )
     }

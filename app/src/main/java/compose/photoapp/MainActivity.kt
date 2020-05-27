@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         val adProvider = AdProvider(this, lifecycle)
         setContent {
             Providers(AdProviderAmbient provides adProvider) {
-                MaterialTheme {
+                PhotoAppTheme {
                     var selectedId by savedInstanceState<String?> { null }
                     if (selectedId == null) {
                         Feed(
