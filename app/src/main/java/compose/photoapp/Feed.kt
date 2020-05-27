@@ -2,7 +2,10 @@ package compose.photoapp
 
 import androidx.compose.Composable
 import androidx.compose.State
+import androidx.ui.core.Modifier
 import androidx.ui.foundation.AdapterList
+import androidx.ui.layout.fillMaxSize
+import androidx.ui.material.Surface
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 import androidx.compose.collectAsState as composeCollectAsState
@@ -14,24 +17,26 @@ fun Feed(
     photographersFlow: StateFlow<List<Photographer>>,
     onSelected: (Photographer) -> Unit
 ) {
-    val photographers = photographersFlow.collectAsState().value
-    AdapterList(
-        buildList {
-            add(FeedItem.Header)
-            addAll(photographers.map { FeedItem.PhotographerCard(it) })
-            if (size > 3) {
-                add(3, FeedItem.Ad)
+    Surface(Modifier.fillMaxSize()) {
+        val photographers = photographersFlow.collectAsState().value
+        AdapterList(
+            buildList {
+                add(FeedItem.Header)
+                addAll(photographers.map { FeedItem.PhotographerCard(it) })
+                if (size > 3) {
+                    add(3, FeedItem.Ad)
+                }
             }
-        }
-    ) {
-        when (it) {
-            is FeedItem.Header -> FeedHeader()
-            is FeedItem.Ad -> AdBanner()
-            is FeedItem.PhotographerCard ->
-                PhotographerCard(
-                    photographer = it.photographer,
-                    onClick = { onSelected(it.photographer) })
+        ) {
+            when (it) {
+                is FeedItem.Header -> FeedHeader()
+                is FeedItem.Ad -> AdBanner()
+                is FeedItem.PhotographerCard ->
+                    PhotographerCard(
+                        photographer = it.photographer,
+                        onClick = { onSelected(it.photographer) })
 
+            }
         }
     }
 }

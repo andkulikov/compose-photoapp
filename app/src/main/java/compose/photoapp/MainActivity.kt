@@ -6,9 +6,12 @@ import androidx.activity.viewModels
 import androidx.compose.Providers
 import androidx.compose.getValue
 import androidx.compose.setValue
+import androidx.ui.animation.Crossfade
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
+import androidx.ui.graphics.Color
 import androidx.ui.layout.Column
+import androidx.ui.layout.fillMaxSize
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Surface
 import androidx.ui.savedinstancestate.savedInstanceState
@@ -25,21 +28,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             Providers(AdProviderAmbient provides adProvider) {
                 MaterialTheme {
-                    Surface {
-                        Column {
-                            var selectedId by savedInstanceState<String?> { null }
-                            val selected = viewModel.getById(selectedId)
-                            if (selected == null) {
-                                Feed(
-                                    viewModel.photographers,
-                                    onSelected = { selectedId = it.id }
-                                )
-                            } else {
-                                Profile(selected)
-                                onBackPressed(onBackPressedDispatcher) {
-                                    selectedId = null
-                                }
-                            }
+                    var selectedId by savedInstanceState<String?> { null }
+                    if (selectedId == null) {
+                        Feed(
+                            viewModel.photographers,
+                            onSelected = { selectedId = it.id }
+                        )
+                    } else {
+                        Profile(viewModel.getById(selectedId!!))
+                        onBackPressed(onBackPressedDispatcher) {
+                            selectedId = null
                         }
                     }
                 }

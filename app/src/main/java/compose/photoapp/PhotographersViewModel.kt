@@ -11,7 +11,7 @@ class PhotographersViewModel : ViewModel() {
     private val _photographers = MutableStateFlow<List<Photographer>>(emptyList())
     val photographers: StateFlow<List<Photographer>> = _photographers
 
-    fun getById(id: String?) = photographers.value.firstOrNull { it.id == id }
+    fun getById(id: String) = photographers.value.first { it.id == id }
 
     init {
         _photographers.value = mutableListOf(

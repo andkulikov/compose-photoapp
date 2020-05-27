@@ -4,8 +4,10 @@ import androidx.animation.LinearOutSlowInEasing
 import androidx.animation.TweenBuilder
 import androidx.compose.Composable
 import androidx.compose.onActive
+import androidx.compose.onCommit
 import androidx.ui.animation.animatedFloat
 import androidx.ui.core.*
+import androidx.ui.foundation.Box
 import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
@@ -17,6 +19,7 @@ import androidx.ui.material.MaterialTheme
 import androidx.ui.material.ProvideEmphasis
 import androidx.ui.material.ripple.ripple
 import androidx.ui.res.imageResource
+import androidx.ui.res.loadImageResource
 import androidx.ui.text.font.FontWeight
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
@@ -62,14 +65,10 @@ fun PhotographerCard(photographer: Photographer, onClick: () -> Unit, modifier: 
                     easing = LinearOutSlowInEasing
                 })
             }
-            Card(
-                Modifier.fillMaxWidth(),
-                elevation = 4.dp
-            ) {
-                Image(
-                    imageResource(id = photographer.mainImage),
-                    Modifier.drawOpacity(alpha.value),
-                    contentScale = ContentScale.Crop
+            Card(elevation = 4.dp) {
+                FadeInImage(
+                    photographer.mainImage,
+                    Modifier.fillMaxWidth().height(250.dp)
                 )
             }
         }

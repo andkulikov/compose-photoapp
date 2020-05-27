@@ -117,12 +117,10 @@ private fun PortfolioCard(groupedPhotos: Map<String, List<Int>>) {
                 selectedGroup = selectedGroup,
                 onSelected = { selectedGroup = groups.elementAt(it) }
             )
-            Crossfade(current = selectedGroup) {
-                PhotosGrid(
-                    groupedPhotos[selectedGroup]!!,
-                    Modifier.padding(top = 8.dp, bottom = 16.dp)
-                )
-            }
+            PhotosGrid(
+                groupedPhotos[selectedGroup]!!,
+                Modifier.padding(top = 8.dp, bottom = 16.dp)
+            )
         }
     }
 }
@@ -203,15 +201,7 @@ private fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
         children = {
             require(images.size >= 6) { "Requires 6 photos for the grid." }
             images.forEach {
-                Box(
-                    Modifier.aspectRatio(1f).clip(RoundedCornerShape(16.dp))
-                ) {
-                    // async load of the resources
-                    val asset = loadImageResource(id = it)
-                    asset.resource.resource?.let {
-                        Image(it, contentScale = ContentScale.Crop)
-                    }
-                }
+                FadeInImage(it, Modifier.aspectRatio(1f).clip(RoundedCornerShape(16.dp)))
             }
         },
         modifier = modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally)
