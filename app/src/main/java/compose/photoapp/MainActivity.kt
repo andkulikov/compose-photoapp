@@ -6,14 +6,7 @@ import androidx.activity.viewModels
 import androidx.compose.Providers
 import androidx.compose.getValue
 import androidx.compose.setValue
-import androidx.ui.animation.Crossfade
-import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
-import androidx.ui.graphics.Color
-import androidx.ui.layout.Column
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Surface
 import androidx.ui.savedinstancestate.savedInstanceState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
