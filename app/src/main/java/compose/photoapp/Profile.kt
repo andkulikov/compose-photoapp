@@ -30,12 +30,14 @@ fun Profile(photographer: Photographer, modifier: Modifier = Modifier) {
     ) {
         // TODO: remove Column when Surface uses it inside
         Column(Modifier.padding(top = 24.dp)) {
+            Spacer(modifier = Modifier.weight(1f))
             Header(photographer)
             Spacer(modifier = Modifier.weight(1f))
             TagsList(
                 photographer.tags,
                 Modifier.padding(top = padding, bottom = padding)
             )
+            Spacer(modifier = Modifier.weight(1f))
             PortfolioCard(groupedPhotos = photographer.photos)
         }
     }
