@@ -95,7 +95,7 @@ private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .drawBorder(
                             1.dp,
-                            EmphasisAmbient.current.disabled.emphasize(contentColor()),
+                            EmphasisAmbient.current.disabled.applyEmphasis(contentColor()),
                             CircleShape
                         )
                         .padding(padding)
@@ -145,7 +145,7 @@ private fun Tab(groups: List<String>, selectedGroup: String, onSelected: (String
     ) { index, group ->
         val color = animate(
             if (selectedGroup == group) MaterialTheme.colors.primary else
-                EmphasisAmbient.current.disabled.emphasize(MaterialTheme.colors.onSurface)
+                EmphasisAmbient.current.disabled.applyEmphasis(MaterialTheme.colors.onSurface)
         )
         Tab(
             text = { Text(text = group, color = color) },

@@ -4,13 +4,9 @@ import androidx.animation.LinearOutSlowInEasing
 import androidx.animation.TweenBuilder
 import androidx.compose.Composable
 import androidx.compose.onActive
-import androidx.compose.onCommit
 import androidx.ui.animation.animatedFloat
 import androidx.ui.core.*
-import androidx.ui.foundation.Box
-import androidx.ui.foundation.Clickable
-import androidx.ui.foundation.Image
-import androidx.ui.foundation.Text
+import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.CircleShape
 import androidx.ui.layout.*
 import androidx.ui.material.Card
@@ -25,52 +21,55 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 
 @Composable
-fun PhotographerCard(photographer: Photographer, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Clickable(onClick = onClick, modifier = modifier.ripple()) {
-        val padding = 16.dp
-        Column(
-            Modifier.padding(
+fun PhotographerCard(
+    photographer: Photographer,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val padding = 16.dp
+    Column(
+        modifier.clickable(onClick = onClick)
+            .padding(
                 top = padding / 2,
                 start = padding,
                 end = padding,
                 bottom = padding / 2
             ).fillMaxWidth()
+    ) {
+        Row(
+            verticalGravity = Alignment.CenterVertically
         ) {
-            Row(
-                verticalGravity = Alignment.CenterVertically
-            ) {
-                Image(
-                    imageResource(id = photographer.avatar),
-                    Modifier
-                        .size(48.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
+            Image(
+                imageResource(id = photographer.avatar),
+                Modifier
+                    .size(48.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+            Spacer(Modifier.size(padding))
+            Column {
+                Text(
+                    photographer.name,
+                    style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Medium)
                 )
-                Spacer(Modifier.size(padding))
-                Column {
-                    Text(
-                        photographer.name,
-                        style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Medium)
-                    )
-                    ProvideEmphasis(emphasis = EmphasisAmbient.current.medium) {
-                        Text(photographer.lastSeenOnline, style = MaterialTheme.typography.caption)
-                    }
+                ProvideEmphasis(emphasis = EmphasisAmbient.current.medium) {
+                    Text(photographer.lastSeenOnline, style = MaterialTheme.typography.caption)
                 }
             }
-            Spacer(Modifier.size(padding))
-            val alpha = animatedFloat(0f)
-            onActive {
-                alpha.animateTo(1f, TweenBuilder<Float>().apply {
-                    duration = 300
-                    easing = LinearOutSlowInEasing
-                })
-            }
-            Card(elevation = 4.dp) {
-                FadeInImage(
-                    photographer.mainImage,
-                    Modifier.fillMaxWidth().height(250.dp)
-                )
-            }
+        }
+        Spacer(Modifier.size(padding))
+        val alpha = animatedFloat(0f)
+        onActive {
+            alpha.animateTo(1f, TweenBuilder<Float>().apply {
+                duration = 300
+                easing = LinearOutSlowInEasing
+            })
+        }
+        Card(elevation = 4.dp) {
+            FadeInImage(
+                photographer.mainImage,
+                Modifier.fillMaxWidth().height(250.dp)
+            )
         }
     }
 }

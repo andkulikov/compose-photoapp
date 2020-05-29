@@ -2,8 +2,10 @@ package compose.photoapp
 
 import android.content.Context
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.compose.Composable
+import androidx.compose.onDispose
 import androidx.compose.remember
 import androidx.compose.staticAmbientOf
 import androidx.lifecycle.Lifecycle
@@ -24,6 +26,10 @@ fun AdBanner() {
     val adView = remember(adProvider) { adProvider.getAdView() }
     Box(gravity = Alignment.Center, padding = 16.dp) {
         AndroidView(adView)
+        onDispose {
+            // workaround for a bug, already fixed in upcoming dev14:
+            (adView.parent as ViewGroup).removeView(adView)
+        }
     }
 }
 

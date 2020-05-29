@@ -1,14 +1,13 @@
 package compose.photoapp
 
 import androidx.compose.Composable
-import androidx.compose.State
+import androidx.compose.collectAsState
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.AdapterList
 import androidx.ui.layout.fillMaxSize
 import androidx.ui.material.Surface
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
-import androidx.compose.collectAsState as composeCollectAsState
 
 @ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
@@ -46,8 +45,3 @@ private sealed class FeedItem {
     data class PhotographerCard(val photographer: Photographer) : FeedItem()
     object Ad : FeedItem()
 }
-
-// TODO this function is a part of dev12 release, to remove once we migrate to this version
-@ExperimentalCoroutinesApi
-@Composable
-fun <T : Any> StateFlow<T>.collectAsState(): State<T> = composeCollectAsState(value)
