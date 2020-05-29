@@ -1,19 +1,14 @@
 package compose.photoapp
 
 import androidx.compose.Composable
-import androidx.ui.core.ContentScale
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
-import androidx.ui.material.Card
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Surface
-import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-
 
 @Composable
 fun RoundedHeader(title: String) {

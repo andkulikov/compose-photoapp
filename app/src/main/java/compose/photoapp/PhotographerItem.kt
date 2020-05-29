@@ -13,9 +13,7 @@ import androidx.ui.material.Card
 import androidx.ui.material.EmphasisAmbient
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.ProvideEmphasis
-import androidx.ui.material.ripple.ripple
 import androidx.ui.res.imageResource
-import androidx.ui.res.loadImageResource
 import androidx.ui.text.font.FontWeight
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
