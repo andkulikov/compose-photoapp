@@ -3,6 +3,7 @@ package compose.photoapp
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.compose.Composable
 import androidx.compose.onDispose
@@ -63,12 +64,38 @@ class AdProvider(private val context: Context, private val lifecycle: Lifecycle)
         })
     }
 
-    fun getAdView(): View =
+    fun getAdView(): View = temporaryWrap(
         if (preloaded.parent == null) {
             preloaded
         } else {
             createAdView()
         }
+    )
 }
 
 val AdProviderAmbient = staticAmbientOf<AdProvider>()
+
+// workaround for a bug, to be removed when the fix is released
+private fun temporaryWrap(view: View): View {
+    val frameLayout = object : FrameLayout(view.context) {
+        override fun onDescendantInvalidated(child: View, target: View) {
+            if (isLaidOut) {
+                super.onDescendantInvalidated(child, target)
+            } else {
+                post {
+                    if (parent != null) {
+                        super.onDescendantInvalidated(child, target)
+                    }
+                }
+            }
+        }
+
+        override fun onDetachedFromWindow() {
+            super.onDetachedFromWindow()
+            removeAllViews()
+        }
+    }
+    frameLayout.layoutParams = view.layoutParams
+    frameLayout.addView(view, view.layoutParams)
+    return frameLayout
+}

@@ -6,7 +6,6 @@ import androidx.activity.viewModels
 import androidx.compose.Providers
 import androidx.compose.getValue
 import androidx.compose.setValue
-import androidx.ui.core.setContent
 import androidx.ui.savedinstancestate.savedInstanceState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -18,7 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val viewModel by viewModels<PhotographersViewModel>()
         val adProvider = AdProvider(this, lifecycle)
-        setContent {
+        setContentTmp {
             Providers(AdProviderAmbient provides adProvider) {
                 PhotoAppTheme {
                     var selectedId by savedInstanceState<String?> { null }
