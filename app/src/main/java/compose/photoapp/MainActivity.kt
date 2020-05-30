@@ -21,15 +21,17 @@ class MainActivity : ComponentActivity() {
             Providers(AdProviderAmbient provides adProvider) {
                 PhotoAppTheme {
                     var selectedId by savedInstanceState<String?> { null }
-                    if (selectedId == null) {
-                        Feed(
-                            viewModel.photographers,
-                            onSelected = { selectedId = it.id }
-                        )
-                    } else {
-                        Profile(viewModel.getById(selectedId!!))
-                        onBackPressed(onBackPressedDispatcher) {
-                            selectedId = null
+                    CrossfadeTmp(current = selectedId) { id ->
+                        if (id == null) {
+                            Feed(
+                                viewModel.photographers,
+                                onSelected = { selectedId = it.id }
+                            )
+                        } else {
+                            Profile(viewModel.getById(id))
+                            onBackPressed(onBackPressedDispatcher) {
+                                selectedId = null
+                            }
                         }
                     }
                 }
