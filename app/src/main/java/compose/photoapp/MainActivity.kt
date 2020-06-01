@@ -9,7 +9,6 @@ import androidx.compose.setValue
 import androidx.ui.savedinstancestate.savedInstanceState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
 class MainActivity : ComponentActivity() {
 

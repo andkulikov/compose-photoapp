@@ -9,7 +9,6 @@ import androidx.ui.material.Surface
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 
-@ExperimentalStdlibApi
 @ExperimentalCoroutinesApi
 @Composable
 fun Feed(
@@ -19,7 +18,7 @@ fun Feed(
     Surface(Modifier.fillMaxSize()) {
         val photographers = photographersFlow.collectAsState().value
         AdapterList(
-            buildList {
+            mutableListOf<FeedItem>().apply {
                 add(FeedItem.Header)
                 addAll(photographers.map { FeedItem.PhotographerCard(it) })
                 if (size > 3) {
