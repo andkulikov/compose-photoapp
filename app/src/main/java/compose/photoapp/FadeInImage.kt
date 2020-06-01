@@ -20,13 +20,10 @@ fun FadeInImage(id: Int, modifier: Modifier = Modifier)   {
     } else {
         val alpha = animatedFloat(0f)
         onCommit(image) {
-            alpha.snapTo(0f)
-            if (image != null) {
-                alpha.animateTo(1f, TweenBuilder<Float>().apply {
-                    duration = 300
-                    easing = LinearOutSlowInEasing
-                })
-            }
+            alpha.animateTo(1f, TweenBuilder<Float>().apply {
+                duration = 300
+                easing = LinearOutSlowInEasing
+            })
         }
         Image(
             image,
