@@ -14,7 +14,8 @@ fun PhotoAppTheme(content: @Composable() () -> Unit) {
         primary = primary
     )
     val darkColors = darkColorPalette(
-        primary = primary
+        primary = primary,
+        onPrimary = Color.White
     )
     val colors = if (isSystemInDarkTheme()) darkColors else lightColors
     MaterialTheme(colors = colors, content = content)
