@@ -20,6 +20,7 @@ import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Tab
 import androidx.ui.material.TabRow
 import androidx.ui.tooling.preview.Preview
+import androidx.ui.unit.Px
 import androidx.ui.unit.dp
 import androidx.ui.unit.toPx
 
@@ -69,10 +70,10 @@ private fun TabIndicatorContainer(
                 }
             }
             transition {
-                IndicatorOffset using PhysicsBuilder(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
+                IndicatorOffset using physics<Px> {
+                    dampingRatio = Spring.DampingRatioLowBouncy
                     stiffness = Spring.StiffnessLow
-                )
+                }
             }
         }
     }
