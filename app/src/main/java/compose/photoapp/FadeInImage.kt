@@ -14,20 +14,20 @@ import androidx.ui.res.loadImageResource
 
 @Composable
 fun FadeInImage(id: Int, modifier: Modifier = Modifier)   {
-    val alpha = animatedFloat(0f)
     val image = loadImageResource(id = id).resource.resource
-    onCommit(image) {
-        alpha.snapTo(0f)
-        if (image != null) {
-            alpha.animateTo(1f, TweenBuilder<Float>().apply {
-                duration = 300
-                easing = LinearOutSlowInEasing
-            })
-        }
-    }
     if (image == null) {
         Spacer(modifier = modifier)
     } else {
+        val alpha = animatedFloat(0f)
+        onCommit(image) {
+            alpha.snapTo(0f)
+            if (image != null) {
+                alpha.animateTo(1f, TweenBuilder<Float>().apply {
+                    duration = 300
+                    easing = LinearOutSlowInEasing
+                })
+            }
+        }
         Image(
             image,
             modifier.drawOpacity(alpha.value),
