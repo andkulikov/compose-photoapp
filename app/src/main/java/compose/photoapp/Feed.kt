@@ -2,6 +2,7 @@ package compose.photoapp
 
 import androidx.compose.Composable
 import androidx.compose.collectAsState
+import androidx.compose.getValue
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.AdapterList
 import androidx.ui.layout.fillMaxSize
@@ -16,7 +17,7 @@ fun Feed(
     onSelected: (Photographer) -> Unit
 ) {
     Surface(Modifier.fillMaxSize()) {
-        val photographers = photographersFlow.collectAsState().value
+        val photographers by photographersFlow.collectAsState()
         AdapterList(
             mutableListOf<FeedItem>().apply {
                 add(FeedItem.Header)
