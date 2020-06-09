@@ -22,10 +22,9 @@ fun ProfileHeader(photographer: Photographer) {
         modifier = Modifier.fillMaxWidth().padding(start = padding, end = padding),
         verticalGravity = Alignment.CenterVertically
     ) {
-        Image(
-            asset = imageResource(id = photographer.avatar),
-            modifier = Modifier.size(72.dp).clip(CircleShape),
-            contentScale = ContentScale.Crop
+        FadeInImage(
+            id = photographer.avatar,
+            modifier = Modifier.size(72.dp).clip(CircleShape)
         )
         Spacer(Modifier.size(padding))
         Column {

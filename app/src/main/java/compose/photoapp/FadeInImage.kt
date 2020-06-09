@@ -13,7 +13,11 @@ import androidx.ui.layout.Spacer
 import androidx.ui.res.loadImageResource
 
 @Composable
-fun FadeInImage(id: Int, modifier: Modifier = Modifier)   {
+fun FadeInImage(
+    id: Int,
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop
+) {
     val image = loadImageResource(id = id).resource.resource
     if (image == null) {
         Spacer(modifier = modifier)
@@ -29,7 +33,7 @@ fun FadeInImage(id: Int, modifier: Modifier = Modifier)   {
         Image(
             image,
             modifier.drawOpacity(alpha.value),
-            contentScale = ContentScale.Crop
+            contentScale = contentScale
         )
     }
 }

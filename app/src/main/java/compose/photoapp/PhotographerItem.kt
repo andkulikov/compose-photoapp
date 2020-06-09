@@ -37,9 +37,9 @@ fun PhotographerCard(
         Row(
             verticalGravity = Alignment.CenterVertically
         ) {
-            Image(
-                imageResource(id = photographer.avatar),
-                Modifier
+            FadeInImage(
+                id = photographer.avatar,
+                modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop
