@@ -3,7 +3,7 @@ package compose.photoapp
 import androidx.animation.Spring
 import androidx.animation.transitionDefinition
 import androidx.compose.*
-import androidx.ui.animation.PxPropKey
+import androidx.ui.animation.DpPropKey
 import androidx.ui.animation.Transition
 import androidx.ui.animation.animate
 import androidx.ui.core.Alignment
@@ -18,9 +18,7 @@ import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Tab
 import androidx.ui.material.TabRow
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.Px
-import androidx.ui.unit.dp
-import androidx.ui.unit.toPx
+import androidx.ui.unit.*
 
 @Composable
 fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) -> Unit) {
@@ -29,7 +27,7 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
         selectedIndex = groups.indexOf(selectedGroup),
         backgroundColor = MaterialTheme.colors.surface,
         indicatorContainer = { positions ->
-            TabIndicatorContainer(positions, groups.indexOf(selectedGroup)) {
+            TabIndicatorContainer(positions.convertToDp(), groups.indexOf(selectedGroup)) {
                 // circle indicator
                 val color = MaterialTheme.colors.primary
                 Canvas(Modifier.preferredSize(4.dp)) {
@@ -52,23 +50,24 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
     }
 }
 
-private val IndicatorOffset = PxPropKey()
 
 @Composable
 private fun TabIndicatorContainer(
-    tabPositions: List<TabRow.TabPosition>,
+    tabPositions: List<TabPosition>,
     selectedIndex: Int,
     indicator: @Composable() () -> Unit
 ) {
+    val indicatorOffset = remember { DpPropKey() }
+
     val transitionDefinition = remember(tabPositions) {
         transitionDefinition {
             tabPositions.forEachIndexed { index, position ->
                 state(index) {
-                    this[IndicatorOffset] = position.left.toPx()
+                    this[indicatorOffset] = (position.left + position.right) / 2
                 }
             }
             transition {
-                IndicatorOffset using physics<Px> {
+                indicatorOffset using physics<Dp> {
                     dampingRatio = Spring.DampingRatioLowBouncy
                     stiffness = Spring.StiffnessLow
                 }
@@ -77,16 +76,11 @@ private fun TabIndicatorContainer(
     }
 
     Transition(transitionDefinition, selectedIndex, initState = selectedIndex) { state ->
-        val offset = with(DensityAmbient.current) { state[IndicatorOffset].toDp() }
-        val currentTabWidth = with(DensityAmbient.current) {
-            tabPositions[selectedIndex].width.toDp()
-        }
         Box(
             modifier = Modifier
-                .fillMaxHeight()
-                .preferredWidth(currentTabWidth)
-                .wrapContentSize(Alignment.BottomCenter)
-                .offset(x = offset, y = (-2).dp),
+                .fillMaxSize()
+                .wrapContentSize(Alignment.BottomStart)
+                .offset(x = state[indicatorOffset], y = (-2).dp),
             children = indicator
         )
     }
@@ -103,4 +97,16 @@ fun TabPreview() {
             onSelected = { selectedGroup = it }
         )
     }
+}
+
+// temporary until we migrate to the latest Compose build where it is already in dp
+@Composable
+fun List<TabRow.TabPosition>.convertToDp(): List<TabPosition> {
+    return with(DensityAmbient.current) {
+        map { TabPosition(it.left.toDp(), it.width.toDp()) }
+    }
+}
+
+data class TabPosition internal constructor(val left: Dp, val width: Dp) {
+    val right: Dp get() = left + width
 }
