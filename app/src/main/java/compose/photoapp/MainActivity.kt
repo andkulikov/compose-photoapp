@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
+                    window.updateStatusBar()
                 }
             }
         }
