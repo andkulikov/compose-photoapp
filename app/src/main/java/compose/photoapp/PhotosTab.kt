@@ -1,10 +1,8 @@
 package compose.photoapp
 
-import androidx.animation.PhysicsBuilder
 import androidx.animation.Spring
 import androidx.animation.transitionDefinition
-import androidx.compose.Composable
-import androidx.compose.remember
+import androidx.compose.*
 import androidx.ui.animation.PxPropKey
 import androidx.ui.animation.Transition
 import androidx.ui.animation.animate
@@ -98,10 +96,11 @@ private fun TabIndicatorContainer(
 @Composable
 fun TabPreview() {
     MaterialTheme {
+        var selectedGroup by state { "b/w" }
         PhotosTab(
             groups = listOf("sports", "portrait", "b/w", "neon city"),
-            selectedGroup = "b/w",
-            onSelected = {}
+            selectedGroup = selectedGroup,
+            onSelected = { selectedGroup = it }
         )
     }
 }
