@@ -89,7 +89,7 @@ private fun TabIndicatorContainer(
 @Preview
 @Composable
 fun TabPreview() {
-    MaterialTheme {
+    PhotoAppTheme {
         var selectedGroup by state { "b/w" }
         PhotosTab(
             groups = listOf("sports", "portrait", "b/w", "neon city"),
