@@ -75,7 +75,7 @@ private fun TabIndicatorContainer(
         }
     }
 
-    Transition(transitionDefinition, selectedIndex, initState = selectedIndex) { state ->
+    Transition(transitionDefinition, selectedIndex) { state ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
