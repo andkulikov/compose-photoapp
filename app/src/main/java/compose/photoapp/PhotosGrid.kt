@@ -10,9 +10,6 @@ import androidx.ui.layout.aspectRatio
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.wrapContentWidth
 import androidx.ui.unit.dp
-import androidx.ui.unit.ipx
-import androidx.ui.unit.min
-
 
 @Composable
 fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
@@ -28,10 +25,10 @@ fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
         val padding = 8.dp.toIntPx()
 
         // to cover small screens
-        val minDimension = min(constraints.maxHeight, constraints.maxWidth)
+        val minDimension = minOf(constraints.maxHeight, constraints.maxWidth)
 
         val smallImageConstraints = constraints.copy(
-            minWidth = 0.ipx,
+            minWidth = 0,
             maxWidth = (minDimension - padding * 2) / 3
         )
         val placeables = measurables
@@ -41,7 +38,7 @@ fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
             }
 
         val bigImageConstraints = constraints.copy(
-            minWidth = 0.ipx,
+            minWidth = 0,
             maxWidth = minDimension - padding - placeables[0].width
         )
         val bigImagePlaceable = measurables.first().measure(bigImageConstraints)
@@ -51,8 +48,8 @@ fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
         val width = placeables[0].width * 3 + padding * 2
 
         layout(width, height) {
-            var positionX = 0.ipx
-            var positionY = 0.ipx
+            var positionX = 0
+            var positionY = 0
 
             bigImagePlaceable.place(positionX, positionY)
 

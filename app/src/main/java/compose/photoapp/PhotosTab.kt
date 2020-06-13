@@ -27,7 +27,7 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
         selectedIndex = groups.indexOf(selectedGroup),
         backgroundColor = MaterialTheme.colors.surface,
         indicatorContainer = { positions ->
-            TabIndicatorContainer(positions.convertToDp(), groups.indexOf(selectedGroup)) {
+            TabIndicatorContainer(positions, groups.indexOf(selectedGroup)) {
                 // circle indicator
                 val color = MaterialTheme.colors.primary
                 Canvas(Modifier.preferredSize(4.dp)) {
@@ -53,7 +53,7 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
 
 @Composable
 private fun TabIndicatorContainer(
-    tabPositions: List<TabPosition>,
+    tabPositions: List<TabRow.TabPosition>,
     selectedIndex: Int,
     indicator: @Composable() () -> Unit
 ) {
@@ -97,16 +97,4 @@ fun TabPreview() {
             onSelected = { selectedGroup = it }
         )
     }
-}
-
-// temporary until we migrate to the latest Compose build where it is already in dp
-@Composable
-fun List<TabRow.TabPosition>.convertToDp(): List<TabPosition> {
-    return with(DensityAmbient.current) {
-        map { TabPosition(it.left.toDp(), it.width.toDp()) }
-    }
-}
-
-data class TabPosition internal constructor(val left: Dp, val width: Dp) {
-    val right: Dp get() = left + width
 }

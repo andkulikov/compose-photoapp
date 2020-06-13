@@ -2,17 +2,14 @@ package compose.photoapp
 
 import android.content.Context
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.compose.Composable
-import androidx.compose.onDispose
-import androidx.compose.remember
-import androidx.compose.staticAmbientOf
+import androidx.compose.*
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.ui.core.Alignment
+import androidx.ui.core.ContextAmbient
+import androidx.ui.core.LifecycleOwnerAmbient
 import androidx.ui.foundation.Box
 import androidx.ui.unit.dp
 import androidx.ui.viewinterop.AndroidView
@@ -27,11 +24,17 @@ fun AdBanner() {
     val adView = remember(adProvider) { adProvider.getAdView() }
     Box(gravity = Alignment.Center, padding = 16.dp) {
         AndroidView(adView)
-        onDispose {
-            // workaround for a bug, already fixed in upcoming dev14:
-            (adView.parent as ViewGroup).removeView(adView)
-        }
     }
+}
+
+@Composable
+fun ProvideAdProvider(children: @Composable() () -> Unit) {
+    val context = ContextAmbient.current
+    val lifecycle = LifecycleOwnerAmbient.current.lifecycle
+    Providers(
+        AdProviderAmbient provides remember { AdProvider(context, lifecycle) },
+        children = children
+    )
 }
 
 class AdProvider(private val context: Context, private val lifecycle: Lifecycle) {
@@ -64,38 +67,11 @@ class AdProvider(private val context: Context, private val lifecycle: Lifecycle)
         })
     }
 
-    fun getAdView(): View = temporaryWrap(
-        if (preloaded.parent == null) {
-            preloaded
-        } else {
-            createAdView()
-        }
-    )
+    fun getAdView(): View = if (preloaded.parent == null) {
+        preloaded
+    } else {
+        createAdView()
+    }
 }
 
 val AdProviderAmbient = staticAmbientOf<AdProvider>()
-
-// workaround for a bug, to be removed when the fix is released
-private fun temporaryWrap(view: View): View {
-    val frameLayout = object : FrameLayout(view.context) {
-        override fun onDescendantInvalidated(child: View, target: View) {
-            if (isLaidOut) {
-                super.onDescendantInvalidated(child, target)
-            } else {
-                post {
-                    if (parent != null) {
-                        super.onDescendantInvalidated(child, target)
-                    }
-                }
-            }
-        }
-
-        override fun onDetachedFromWindow() {
-            super.onDetachedFromWindow()
-            removeAllViews()
-        }
-    }
-    frameLayout.layoutParams = view.layoutParams
-    frameLayout.addView(view, view.layoutParams)
-    return frameLayout
-}

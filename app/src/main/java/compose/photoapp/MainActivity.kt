@@ -2,11 +2,11 @@ package compose.photoapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
-import androidx.compose.Providers
 import androidx.compose.getValue
 import androidx.compose.setValue
+import androidx.ui.core.setContent
 import androidx.ui.savedinstancestate.savedInstanceState
+import androidx.ui.viewmodel.viewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -14,13 +14,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel by viewModels<PhotographersViewModel>()
-        val adProvider = AdProvider(this, lifecycle)
-        setContentTmp {
-            Providers(AdProviderAmbient provides adProvider) {
+        setContent {
+            ProvideAdProvider {
                 PhotoAppTheme {
+                    val viewModel = viewModel<PhotographersViewModel>()
                     var selectedId by savedInstanceState<String?> { null }
-                    CrossfadeTmp(current = selectedId) { id ->
+                    Crossfade(current = selectedId, opaqueChildren = true) { id ->
                         if (id == null) {
                             Feed(
                                 viewModel.photographers,
