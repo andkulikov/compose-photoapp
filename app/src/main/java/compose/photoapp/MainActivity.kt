@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.compose.getValue
 import androidx.compose.setValue
+import androidx.ui.animation.Crossfade
 import androidx.ui.core.setContent
 import androidx.ui.savedinstancestate.savedInstanceState
 import androidx.ui.viewmodel.viewModel
@@ -19,7 +20,7 @@ class MainActivity : ComponentActivity() {
                 PhotoAppTheme {
                     val viewModel = viewModel<PhotographersViewModel>()
                     var selectedId by savedInstanceState<String?> { null }
-                    Crossfade(current = selectedId, opaqueChildren = true) { id ->
+                    Crossfade(current = selectedId) { id ->
                         if (id == null) {
                             Feed(
                                 viewModel.photographers,
