@@ -3,14 +3,17 @@ package compose.photoapp
 import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
-import androidx.compose.*
+import androidx.compose.Composable
+import androidx.compose.Providers
+import androidx.compose.remember
+import androidx.compose.staticAmbientOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.ui.core.Alignment
 import androidx.ui.core.ContextAmbient
 import androidx.ui.core.LifecycleOwnerAmbient
-import androidx.ui.foundation.Box
+import androidx.ui.core.Modifier
+import androidx.ui.layout.padding
 import androidx.ui.unit.dp
 import androidx.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdRequest
@@ -22,9 +25,7 @@ import com.google.android.gms.ads.MobileAds
 fun AdBanner() {
     val adProvider = AdProviderAmbient.current
     val adView = remember(adProvider) { adProvider.getAdView() }
-    Box(gravity = Alignment.Center, padding = 16.dp) {
-        AndroidView(adView)
-    }
+    AndroidView(adView, Modifier.padding(16.dp))
 }
 
 @Composable

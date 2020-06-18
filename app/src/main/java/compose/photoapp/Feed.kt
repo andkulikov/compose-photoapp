@@ -4,7 +4,7 @@ import androidx.compose.Composable
 import androidx.compose.collectAsState
 import androidx.compose.getValue
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.AdapterList
+import androidx.ui.foundation.lazy.LazyColumnItems
 import androidx.ui.layout.fillMaxSize
 import androidx.ui.material.Surface
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +18,7 @@ fun Feed(
 ) {
     Surface(Modifier.fillMaxSize()) {
         val photographers by photographersFlow.collectAsState()
-        AdapterList(
+        LazyColumnItems(
             mutableListOf<FeedItem>().apply {
                 add(FeedItem.Header)
                 addAll(photographers.map { FeedItem.PhotographerCard(it) })
