@@ -13,7 +13,7 @@ import androidx.ui.material.MaterialTheme
 fun Window.updateStatusBar() {
     val color = MaterialTheme.colors.onSurface
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        onCommit(statusBarColor) {
+        onCommit(color) {
             statusBarColor = color.toArgb()
             val isLight = color.luminance() > 0.5f
             decorView.systemUiVisibility = if (isLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
