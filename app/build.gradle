@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
 }
 
-def compose_release_version = "SNAPSHOT" // not yet released snapshot of dev-14
+def compose_release_version = "dev14"
 
 android {
     compileSdkVersion 29
