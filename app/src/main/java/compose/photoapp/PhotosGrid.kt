@@ -28,7 +28,7 @@ fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
         val minDimension = minOf(constraints.maxHeight, constraints.maxWidth)
 
         val smallImageConstraints = constraints.copy(
-            minWidth = 0,
+            minWidth = (minDimension - padding * 2) / 3,
             maxWidth = (minDimension - padding * 2) / 3
         )
         val placeables = measurables
@@ -38,7 +38,7 @@ fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
             }
 
         val bigImageConstraints = constraints.copy(
-            minWidth = 0,
+            minWidth = minDimension - padding - placeables[0].width,
             maxWidth = minDimension - padding - placeables[0].width
         )
         val bigImagePlaceable = measurables.first().measure(bigImageConstraints)
