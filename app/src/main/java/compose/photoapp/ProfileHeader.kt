@@ -27,7 +27,7 @@ fun ProfileHeader(photographer: Photographer) {
             modifier = Modifier.size(72.dp).clip(CircleShape)
         )
         Spacer(Modifier.size(padding))
-        Column {
+        Column(Modifier.weight(1f)) {
             Text(
                 text = photographer.name,
                 style = MaterialTheme.typography.h6
