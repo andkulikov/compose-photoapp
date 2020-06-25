@@ -1,6 +1,6 @@
 Compose PhotoApp
 ============
-A demo project to showcase the posibilities of Jetpack Compose - new UI framework from Google
+A simple demo project to showcase the posibilities of Jetpack Compose
 
 ![Demo](app_demo.gif)
 
