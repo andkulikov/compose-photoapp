@@ -20,7 +20,7 @@ plugins {
     id 'kotlin-android-extensions'
 }
 
-def compose_release_version = "dev14"
+def compose_release_version = "0.1.0-dev15"
 
 android {
     compileSdkVersion 29
@@ -45,14 +45,21 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerVersion "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
-        kotlinCompilerExtensionVersion "0.1.0-$compose_release_version"
+        kotlinCompilerVersion "1.4.0-dev-withExperimentalGoogleExtensions-20200720"
+        kotlinCompilerExtensionVersion "$compose_release_version"
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
     }
 }
 
 dependencies {
-    implementation "androidx.activity:activity-ktx:1.2.0-alpha06"
-    implementation "androidx.ui:ui-material:0.1.0-$compose_release_version"
-    implementation "androidx.ui:ui-tooling:0.1.0-$compose_release_version"
-    implementation "com.google.android.gms:play-services-ads:19.1.0"
+    implementation "androidx.activity:activity-ktx:1.2.0-alpha07"
+    implementation "androidx.compose.material:material:$compose_release_version"
+    implementation "androidx.ui:ui-tooling:$compose_release_version"
+    implementation "com.google.android.gms:play-services-ads:19.3.0"
 }

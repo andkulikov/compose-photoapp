@@ -17,7 +17,7 @@
 package compose.photoapp
 
 import androidx.animation.LinearOutSlowInEasing
-import androidx.animation.TweenBuilder
+import androidx.animation.tween
 import androidx.compose.Composable
 import androidx.compose.onCommit
 import androidx.ui.animation.animatedFloat
@@ -41,10 +41,12 @@ fun FadeInImage(
         val alpha = animatedFloat(0f)
         onCommit(image) {
             alpha.snapTo(0f)
-            alpha.animateTo(1f, TweenBuilder<Float>().apply {
-                duration = 300
-                easing = LinearOutSlowInEasing
-            })
+            alpha.animateTo(
+                1f, tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            )
         }
         Image(
             image,

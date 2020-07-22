@@ -17,13 +17,13 @@
 package compose.photoapp
 
 import androidx.animation.Spring
+import androidx.animation.spring
 import androidx.animation.transitionDefinition
 import androidx.compose.*
 import androidx.ui.animation.DpPropKey
-import androidx.ui.animation.Transition
 import androidx.ui.animation.animate
+import androidx.ui.animation.transition
 import androidx.ui.core.Alignment
-import androidx.ui.core.DensityAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Box
 import androidx.ui.foundation.Canvas
@@ -83,23 +83,22 @@ private fun TabIndicatorContainer(
                 }
             }
             transition {
-                indicatorOffset using physics<Dp> {
-                    dampingRatio = Spring.DampingRatioLowBouncy
+                indicatorOffset using spring<Dp>(
+                    dampingRatio = Spring.DampingRatioLowBouncy,
                     stiffness = Spring.StiffnessLow
-                }
+                )
             }
         }
     }
 
-    Transition(transitionDefinition, selectedIndex) { state ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .wrapContentSize(Alignment.BottomStart)
-                .offset(x = state[indicatorOffset], y = (-2).dp),
-            children = indicator
-        )
-    }
+    val transitionState = transition(transitionDefinition, selectedIndex)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(Alignment.BottomStart)
+            .offset(x = transitionState[indicatorOffset], y = (-2).dp),
+        children = indicator
+    )
 }
 
 @Preview

@@ -71,7 +71,7 @@ private fun PortfolioCard(groupedPhotos: Map<String, List<Int>>) {
 
 @Composable
 private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
-    HorizontalScroller(modifier = modifier) {
+    ScrollableRow(modifier = modifier) {
         val padding = 8.dp
         Row(Modifier.padding(start = padding * 2, end = padding)) {
             tags.forEach {

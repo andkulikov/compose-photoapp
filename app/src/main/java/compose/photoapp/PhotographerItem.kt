@@ -17,7 +17,7 @@
 package compose.photoapp
 
 import androidx.animation.LinearOutSlowInEasing
-import androidx.animation.TweenBuilder
+import androidx.animation.tween
 import androidx.compose.Composable
 import androidx.compose.onActive
 import androidx.ui.animation.animatedFloat
@@ -29,7 +29,6 @@ import androidx.ui.material.Card
 import androidx.ui.material.EmphasisAmbient
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.ProvideEmphasis
-import androidx.ui.res.imageResource
 import androidx.ui.text.font.FontWeight
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
@@ -74,10 +73,12 @@ fun PhotographerCard(
         Spacer(Modifier.size(padding))
         val alpha = animatedFloat(0f)
         onActive {
-            alpha.animateTo(1f, TweenBuilder<Float>().apply {
-                duration = 300
-                easing = LinearOutSlowInEasing
-            })
+            alpha.animateTo(
+                1f, tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            )
         }
         Card(elevation = 4.dp) {
             FadeInImage(
