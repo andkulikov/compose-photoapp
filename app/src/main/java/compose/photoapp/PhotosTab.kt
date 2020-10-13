@@ -57,7 +57,7 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
         groups.forEachIndexed { index, group ->
             val color = animate(
                 if (selectedGroup == group) MaterialTheme.colors.primary else
-                    EmphasisAmbient.current.disabled.applyEmphasis(MaterialTheme.colors.onSurface)
+                    AmbientEmphasisLevels.current.disabled.applyEmphasis(MaterialTheme.colors.onSurface)
             )
             Tab(
                 selected = index == selectedIndex,

@@ -19,7 +19,7 @@ plugins {
     id 'kotlin-android'
 }
 
-def compose_release_version = "1.0.0-alpha04"
+def compose_release_version = "1.0.0-SNAPSHOT" // not yet released snapshot of alpha05
 
 android {
     compileSdkVersion 29

@@ -30,6 +30,8 @@ buildscript {
 allprojects {
     ext.kotlin_version = "1.4.0"
     repositories {
+        def snapshot = "6901934"
+        maven { url "https://androidx.dev/snapshots/builds/$snapshot/artifacts/ui/repository" }
         google()
         jcenter()
     }

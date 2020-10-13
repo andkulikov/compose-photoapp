@@ -23,15 +23,13 @@ import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
-import androidx.compose.material.EmphasisAmbient
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideEmphasis
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.onActive
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.drawLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -45,7 +43,8 @@ fun PhotographerCard(
 ) {
     val padding = 16.dp
     Column(
-        modifier.clickable(onClick = onClick)
+        modifier.drawLayer()
+            .clickable(onClick = onClick)
             .padding(
                 top = padding / 2,
                 start = padding,
@@ -69,7 +68,7 @@ fun PhotographerCard(
                     photographer.name,
                     style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Medium)
                 )
-                ProvideEmphasis(emphasis = EmphasisAmbient.current.medium) {
+                ProvideEmphasis(emphasis = AmbientEmphasisLevels.current.medium) {
                     Text(photographer.lastSeenOnline, style = MaterialTheme.typography.caption)
                 }
             }

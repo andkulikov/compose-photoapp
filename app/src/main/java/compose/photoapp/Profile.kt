@@ -19,7 +19,7 @@ package compose.photoapp
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.EmphasisAmbient
+import androidx.compose.material.AmbientEmphasisLevels
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -85,7 +85,7 @@ private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .border(
                             1.dp,
-                            EmphasisAmbient.current.disabled.applyEmphasis(contentColor()),
+                            AmbientEmphasisLevels.current.disabled.applyEmphasis(AmbientContentColor.current),
                             CircleShape
                         )
                         .padding(padding)
