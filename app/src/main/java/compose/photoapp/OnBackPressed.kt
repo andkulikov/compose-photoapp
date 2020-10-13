@@ -18,8 +18,8 @@ package compose.photoapp
 
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
-import androidx.compose.Composable
-import androidx.compose.onActive
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.onActive
 
 @Composable
 fun onBackPressed(dispatcher: OnBackPressedDispatcher, callback: () -> Unit) {

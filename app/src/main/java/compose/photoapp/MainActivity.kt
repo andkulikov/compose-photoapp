@@ -18,12 +18,12 @@ package compose.photoapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.compose.getValue
-import androidx.compose.setValue
-import androidx.ui.animation.Crossfade
-import androidx.ui.core.setContent
-import androidx.ui.savedinstancestate.savedInstanceState
-import androidx.ui.viewmodel.viewModel
+import androidx.compose.animation.Crossfade
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.viewinterop.viewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi

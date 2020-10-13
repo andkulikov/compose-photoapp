@@ -16,15 +16,19 @@
 
 package compose.photoapp
 
-import androidx.compose.*
-import androidx.ui.core.*
-import androidx.ui.foundation.*
-import androidx.ui.foundation.shape.corner.CircleShape
-import androidx.ui.layout.*
-import androidx.ui.material.*
-import androidx.ui.savedinstancestate.savedInstanceState
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.EmphasisAmbient
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.*
 
 @Composable
 fun Profile(photographer: Photographer, modifier: Modifier = Modifier) {
@@ -79,7 +83,7 @@ private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
                     text = it,
                     style = MaterialTheme.typography.caption,
                     modifier = Modifier
-                        .drawBorder(
+                        .border(
                             1.dp,
                             EmphasisAmbient.current.disabled.applyEmphasis(contentColor()),
                             CircleShape

@@ -16,19 +16,16 @@
 
 package compose.photoapp
 
-import androidx.compose.Composable
-import androidx.ui.core.Alignment
-import androidx.ui.core.ContentScale
-import androidx.ui.core.Modifier
-import androidx.ui.core.clip
-import androidx.ui.foundation.Image
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.shape.corner.CircleShape
-import androidx.ui.layout.*
-import androidx.ui.material.Button
-import androidx.ui.material.MaterialTheme
-import androidx.ui.res.imageResource
-import androidx.ui.unit.dp
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun ProfileHeader(photographer: Photographer) {
@@ -36,7 +33,7 @@ fun ProfileHeader(photographer: Photographer) {
 
     Row(
         modifier = Modifier.fillMaxWidth().padding(start = padding, end = padding),
-        verticalGravity = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically
     ) {
         FadeInImage(
             id = photographer.avatar,
@@ -51,7 +48,7 @@ fun ProfileHeader(photographer: Photographer) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalGravity = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 FollowerInfo(text = "followers", number = photographer.numOfFollowers)
                 FollowerInfo(text = "following", number = photographer.numOfFollowing)
@@ -65,7 +62,7 @@ fun ProfileHeader(photographer: Photographer) {
 
 @Composable
 private fun FollowerInfo(text: String, number: String) {
-    Column(horizontalGravity = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = number, style = MaterialTheme.typography.subtitle2)
         Text(text = text, style = MaterialTheme.typography.caption)
     }

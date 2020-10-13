@@ -19,11 +19,11 @@ package compose.photoapp
 import android.os.Build
 import android.view.View
 import android.view.Window
-import androidx.compose.Composable
-import androidx.compose.onCommit
-import androidx.ui.graphics.luminance
-import androidx.ui.graphics.toArgb
-import androidx.ui.material.MaterialTheme
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.onCommit
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
 
 @Composable
 fun Window.updateStatusBar() {

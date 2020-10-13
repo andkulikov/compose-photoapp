@@ -16,23 +16,23 @@
 
 package compose.photoapp
 
-import androidx.compose.Composable
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.isSystemInDarkTheme
-import androidx.ui.graphics.Color
-import androidx.ui.layout.padding
-import androidx.ui.material.*
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.dp
 
 @Composable
 fun PhotoAppTheme(content: @Composable() () -> Unit) {
     val primary = Color(0xffd32f2f)
-    val lightColors = lightColorPalette(
+    val lightColors = lightColors(
         primary = primary
     )
-    val darkColors = darkColorPalette(
+    val darkColors = darkColors(
         primary = primary,
         onPrimary = Color.White
     )

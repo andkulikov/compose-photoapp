@@ -16,16 +16,16 @@
 
 package compose.photoapp
 
-import androidx.compose.Composable
-import androidx.ui.core.Alignment
-import androidx.ui.core.Layout
-import androidx.ui.core.Modifier
-import androidx.ui.core.clip
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.layout.aspectRatio
-import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.wrapContentWidth
-import androidx.ui.unit.dp
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Layout
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {

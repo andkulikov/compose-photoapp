@@ -19,19 +19,19 @@ package compose.photoapp
 import android.content.Context
 import android.view.View
 import android.widget.LinearLayout
-import androidx.compose.Composable
-import androidx.compose.Providers
-import androidx.compose.remember
-import androidx.compose.staticAmbientOf
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Providers
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.staticAmbientOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.platform.LifecycleOwnerAmbient
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.ui.core.ContextAmbient
-import androidx.ui.core.LifecycleOwnerAmbient
-import androidx.ui.core.Modifier
-import androidx.ui.layout.padding
-import androidx.ui.unit.dp
-import androidx.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
@@ -40,8 +40,9 @@ import com.google.android.gms.ads.MobileAds
 @Composable
 fun AdBanner() {
     val adProvider = AdProviderAmbient.current
-    val adView = remember(adProvider) { adProvider.getAdView() }
-    AndroidView(adView, Modifier.padding(16.dp))
+    AndroidView(modifier = Modifier.padding(16.dp), viewBlock = {
+        adProvider.getAdView()
+    })
 }
 
 @Composable

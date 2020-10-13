@@ -17,14 +17,13 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
 }
 
-def compose_release_version = "0.1.0-dev15"
+def compose_release_version = "1.0.0-alpha04"
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "compose.photoapp"
@@ -45,7 +44,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerVersion "1.4.0-dev-withExperimentalGoogleExtensions-20200720"
+        kotlinCompilerVersion "1.4.0"
         kotlinCompilerExtensionVersion "$compose_release_version"
     }
 }
@@ -58,8 +57,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 }
 
 dependencies {
-    implementation "androidx.activity:activity-ktx:1.2.0-alpha07"
+    implementation "androidx.activity:activity-ktx:1.2.0-beta01"
     implementation "androidx.compose.material:material:$compose_release_version"
     implementation "androidx.ui:ui-tooling:$compose_release_version"
-    implementation "com.google.android.gms:play-services-ads:19.3.0"
+    implementation "com.google.android.gms:play-services-ads:19.4.0"
 }

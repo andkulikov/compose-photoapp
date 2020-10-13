@@ -16,16 +16,18 @@
 
 package compose.photoapp
 
-import androidx.compose.Composable
-import androidx.compose.collectAsState
-import androidx.compose.getValue
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.lazy.LazyColumnItems
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.material.Surface
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.ExperimentalLazyDsl
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 
+@OptIn(ExperimentalLazyDsl::class)
 @ExperimentalCoroutinesApi
 @Composable
 fun Feed(
@@ -34,30 +36,21 @@ fun Feed(
 ) {
     Surface(Modifier.fillMaxSize()) {
         val photographers by photographersFlow.collectAsState()
-        LazyColumnItems(
-            mutableListOf<FeedItem>().apply {
-                add(FeedItem.Header)
-                addAll(photographers.map { FeedItem.PhotographerCard(it) })
-                if (size > 3) {
-                    add(3, FeedItem.Ad)
-                }
+        LazyColumn {
+            item {
+                FeedHeader()
             }
-        ) {
-            when (it) {
-                is FeedItem.Header -> FeedHeader()
-                is FeedItem.Ad -> AdBanner()
-                is FeedItem.PhotographerCard ->
-                    PhotographerCard(
-                        photographer = it.photographer,
-                        onClick = { onSelected(it.photographer) })
-
+            items(photographers.subList(fromIndex = 0, toIndex = minOf(photographers.size, 2))) {
+                PhotographerCard(photographer = it, onClick = { onSelected(it) })
+            }
+            if (photographers.size > 2) {
+                item {
+                    AdBanner()
+                }
+                items(photographers.subList(fromIndex = 2, toIndex = photographers.size)) {
+                    PhotographerCard(photographer = it, onClick = { onSelected(it) })
+                }
             }
         }
     }
-}
-
-private sealed class FeedItem {
-    object Header : FeedItem()
-    data class PhotographerCard(val photographer: Photographer) : FeedItem()
-    object Ad : FeedItem()
 }

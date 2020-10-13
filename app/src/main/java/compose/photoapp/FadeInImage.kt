@@ -16,17 +16,17 @@
 
 package compose.photoapp
 
-import androidx.animation.LinearOutSlowInEasing
-import androidx.animation.tween
-import androidx.compose.Composable
-import androidx.compose.onCommit
-import androidx.ui.animation.animatedFloat
-import androidx.ui.core.ContentScale
-import androidx.ui.core.Modifier
-import androidx.ui.core.drawOpacity
-import androidx.ui.foundation.Image
-import androidx.ui.layout.Spacer
-import androidx.ui.res.loadImageResource
+import androidx.compose.animation.animatedFloat
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.onCommit
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawOpacity
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.loadImageResource
 
 @Composable
 fun FadeInImage(

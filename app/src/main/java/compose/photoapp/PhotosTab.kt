@@ -16,33 +16,34 @@
 
 package compose.photoapp
 
-import androidx.animation.Spring
-import androidx.animation.spring
-import androidx.animation.transitionDefinition
-import androidx.compose.*
-import androidx.ui.animation.DpPropKey
-import androidx.ui.animation.animate
-import androidx.ui.animation.transition
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Box
-import androidx.ui.foundation.Canvas
-import androidx.ui.foundation.Text
-import androidx.ui.layout.*
-import androidx.ui.material.EmphasisAmbient
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Tab
-import androidx.ui.material.TabRow
+import androidx.compose.animation.DpPropKey
+import androidx.compose.animation.animate
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.transitionDefinition
+import androidx.compose.animation.transition
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.*
 
 @Composable
 fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) -> Unit) {
+    val selectedIndex = groups.indexOf(selectedGroup)
     TabRow(
-        items = groups,
-        selectedIndex = groups.indexOf(selectedGroup),
+        selectedTabIndex = selectedIndex,
         backgroundColor = MaterialTheme.colors.surface,
-        indicatorContainer = { positions ->
+        indicator = { positions ->
             TabIndicatorContainer(positions, groups.indexOf(selectedGroup)) {
                 // circle indicator
                 val color = MaterialTheme.colors.primary
@@ -52,31 +53,32 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
             }
         },
         divider = {}
-    ) { index, group ->
-        val color = animate(
-            if (selectedGroup == group) MaterialTheme.colors.primary else
-                EmphasisAmbient.current.disabled.applyEmphasis(MaterialTheme.colors.onSurface)
-        )
-        Tab(
-            text = { Text(text = group, color = color) },
-            selected = index == groups.indexOf(selectedGroup),
-            onSelected = { onSelected(group) },
-            activeColor = MaterialTheme.colors.surface
-        )
+    ) {
+        groups.forEachIndexed { index, group ->
+            val color = animate(
+                if (selectedGroup == group) MaterialTheme.colors.primary else
+                    EmphasisAmbient.current.disabled.applyEmphasis(MaterialTheme.colors.onSurface)
+            )
+            Tab(
+                selected = index == selectedIndex,
+                text = { Text(text = group, color = color) },
+                onClick = { onSelected(group) },
+                selectedContentColor = MaterialTheme.colors.surface
+            )
+        }
     }
 }
 
-
 @Composable
 private fun TabIndicatorContainer(
-    tabPositions: List<TabRow.TabPosition>,
+    tabPositions: List<TabPosition>,
     selectedIndex: Int,
     indicator: @Composable() () -> Unit
 ) {
     val indicatorOffset = remember { DpPropKey() }
 
     val transitionDefinition = remember(tabPositions) {
-        transitionDefinition {
+        transitionDefinition<Int> {
             tabPositions.forEachIndexed { index, position ->
                 state(index) {
                     this[indicatorOffset] = (position.left + position.right) / 2
@@ -96,16 +98,17 @@ private fun TabIndicatorContainer(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.BottomStart)
-            .offset(x = transitionState[indicatorOffset], y = (-2).dp),
-        children = indicator
-    )
+            .offset(x = transitionState[indicatorOffset], y = (-2).dp)
+    ) {
+        indicator()
+    }
 }
 
 @Preview
 @Composable
 fun TabPreview() {
     PhotoAppTheme {
-        var selectedGroup by state { "b/w" }
+        var selectedGroup by remember { mutableStateOf("b/w") }
         PhotosTab(
             groups = listOf("sports", "portrait", "b/w", "neon city"),
             selectedGroup = selectedGroup,
