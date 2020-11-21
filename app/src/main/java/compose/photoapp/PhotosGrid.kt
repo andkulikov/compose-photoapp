@@ -22,15 +22,15 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Layout
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
     Layout(
-        children = {
+        content = {
             require(images.size >= 6) { "Requires 6 photos for the grid." }
             images.subList(0, 6).forEach {
                 FadeInImage(it, Modifier.aspectRatio(1f).clip(RoundedCornerShape(16.dp)))

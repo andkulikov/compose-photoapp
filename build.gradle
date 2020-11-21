@@ -16,22 +16,22 @@
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.0"
+    ext.kotlin_version = "1.4.20"
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.0-alpha13"
+        classpath "com.android.tools.build:gradle:4.2.0-alpha16"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 allprojects {
-    ext.kotlin_version = "1.4.0"
+    ext.kotlin_version = "1.4.20"
     repositories {
-        def snapshot = "6901934"
-        maven { url "https://androidx.dev/snapshots/builds/$snapshot/artifacts/ui/repository" }
+        def snapshot = "6987554"
+        maven { url "https://androidx.dev/snapshots/builds/$snapshot/artifacts/repository" }
         google()
         jcenter()
     }

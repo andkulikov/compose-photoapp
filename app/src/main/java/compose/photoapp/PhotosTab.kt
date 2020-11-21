@@ -23,9 +23,17 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.transitionDefinition
 import androidx.compose.animation.transition
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.preferredSize
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Tab
+import androidx.compose.material.TabPosition
+import androidx.compose.material.TabRow
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,9 +41,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 
 @Composable
 fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) -> Unit) {
@@ -57,7 +65,7 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
         groups.forEachIndexed { index, group ->
             val color = animate(
                 if (selectedGroup == group) MaterialTheme.colors.primary else
-                    AmbientEmphasisLevels.current.disabled.applyEmphasis(MaterialTheme.colors.onSurface)
+                    MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)
             )
             Tab(
                 selected = index == selectedIndex,
@@ -73,7 +81,7 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
 private fun TabIndicatorContainer(
     tabPositions: List<TabPosition>,
     selectedIndex: Int,
-    indicator: @Composable() () -> Unit
+    content: @Composable() () -> Unit
 ) {
     val indicatorOffset = remember { DpPropKey() }
 
@@ -100,7 +108,7 @@ private fun TabIndicatorContainer(
             .wrapContentSize(Alignment.BottomStart)
             .offset(x = transitionState[indicatorOffset], y = (-2).dp)
     ) {
-        indicator()
+        content()
     }
 }
 

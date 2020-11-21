@@ -16,19 +16,26 @@
 
 package compose.photoapp
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ScrollableRow
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.AmbientEmphasisLevels
+import androidx.compose.material.AmbientContentColor
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.savedinstancestate.savedInstanceState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 
 @Composable
 fun Profile(photographer: Photographer, modifier: Modifier = Modifier) {
@@ -38,7 +45,6 @@ fun Profile(photographer: Photographer, modifier: Modifier = Modifier) {
         color = MaterialTheme.colors.onSurface,
         contentColor = MaterialTheme.colors.surface
     ) {
-        // TODO: remove Column when Surface uses it inside
         Column(Modifier.padding(top = 24.dp)) {
             Spacer(modifier = Modifier.weight(1f))
             ProfileHeader(photographer)
@@ -85,7 +91,7 @@ private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .border(
                             1.dp,
-                            AmbientEmphasisLevels.current.disabled.applyEmphasis(AmbientContentColor.current),
+                            AmbientContentColor.current.copy(alpha = ContentAlpha.disabled),
                             CircleShape
                         )
                         .padding(padding)

@@ -44,12 +44,12 @@ class MainActivity : ComponentActivity() {
                             )
                         } else {
                             Profile(viewModel.getById(id))
-                            onBackPressed(onBackPressedDispatcher) {
+                            BackPressedHandler(onBackPressedDispatcher) {
                                 selectedId = null
                             }
                         }
                     }
-                    window.updateStatusBar()
+                    StatusBarBasedOnTheme(window)
                 }
             }
         }

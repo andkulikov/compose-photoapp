@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.onActive
 
 @Composable
-fun onBackPressed(dispatcher: OnBackPressedDispatcher, callback: () -> Unit) {
+fun BackPressedHandler(dispatcher: OnBackPressedDispatcher, callback: () -> Unit) {
     onActive {
         val backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

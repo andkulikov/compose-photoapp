@@ -26,13 +26,13 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 
 @Composable
-fun Window.updateStatusBar() {
+fun StatusBarBasedOnTheme(window: Window) {
     val color = MaterialTheme.colors.onSurface
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         onCommit(color) {
-            statusBarColor = color.toArgb()
+            window.statusBarColor = color.toArgb()
             val isLight = color.luminance() > 0.5f
-            decorView.systemUiVisibility = if (isLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
+            window.decorView.systemUiVisibility = if (isLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
         }
     }
 }

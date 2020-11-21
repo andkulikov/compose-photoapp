@@ -17,7 +17,6 @@
 package compose.photoapp
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -27,7 +26,6 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 
-@OptIn(ExperimentalLazyDsl::class)
 @ExperimentalCoroutinesApi
 @Composable
 fun Feed(

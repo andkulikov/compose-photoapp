@@ -25,8 +25,8 @@ import androidx.compose.runtime.Providers
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticAmbientOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ContextAmbient
-import androidx.compose.ui.platform.LifecycleOwnerAmbient
+import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.AmbientLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
@@ -39,19 +39,19 @@ import com.google.android.gms.ads.MobileAds
 
 @Composable
 fun AdBanner() {
-    val adProvider = AdProviderAmbient.current
+    val adProvider = AmbientAdProvider.current
     AndroidView(modifier = Modifier.padding(16.dp), viewBlock = {
         adProvider.getAdView()
     })
 }
 
 @Composable
-fun ProvideAdProvider(children: @Composable() () -> Unit) {
-    val context = ContextAmbient.current
-    val lifecycle = LifecycleOwnerAmbient.current.lifecycle
+fun ProvideAdProvider(content: @Composable() () -> Unit) {
+    val context = AmbientContext.current
+    val lifecycle = AmbientLifecycleOwner.current.lifecycle
     Providers(
-        AdProviderAmbient provides remember { AdProvider(context, lifecycle) },
-        children = children
+        AmbientAdProvider provides remember { AdProvider(context, lifecycle) },
+        content = content
     )
 }
 
@@ -80,6 +80,7 @@ class AdProvider(private val context: Context, private val lifecycle: Lifecycle)
                     Lifecycle.Event.ON_RESUME -> resume()
                     Lifecycle.Event.ON_PAUSE -> pause()
                     Lifecycle.Event.ON_DESTROY -> destroy()
+                    else -> Unit
                 }
             }
         })
@@ -92,4 +93,4 @@ class AdProvider(private val context: Context, private val lifecycle: Lifecycle)
     }
 }
 
-val AdProviderAmbient = staticAmbientOf<AdProvider>()
+val AmbientAdProvider = staticAmbientOf<AdProvider>()
