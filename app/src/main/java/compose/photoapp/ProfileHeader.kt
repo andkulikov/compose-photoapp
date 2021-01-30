@@ -16,6 +16,7 @@
 
 package compose.photoapp
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +32,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -41,9 +44,11 @@ fun ProfileHeader(photographer: Photographer) {
         modifier = Modifier.fillMaxWidth().padding(start = padding, end = padding),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        FadeInImage(
-            id = photographer.avatar,
-            modifier = Modifier.size(72.dp).clip(CircleShape)
+        Image(
+            painter = painterResource(photographer.avatar),
+            modifier = Modifier.size(72.dp).clip(CircleShape),
+            contentDescription = "avatar",
+            contentScale = ContentScale.Crop
         )
         Spacer(Modifier.size(padding))
         Column(Modifier.weight(1f)) {

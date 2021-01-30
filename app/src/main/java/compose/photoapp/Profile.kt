@@ -16,13 +16,14 @@
 
 package compose.photoapp
 
-import androidx.compose.foundation.ScrollableRow
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.AmbientContentColor
 import androidx.compose.material.ContentAlpha
@@ -81,23 +82,24 @@ private fun PortfolioCard(groupedPhotos: Map<String, List<Int>>) {
 
 @Composable
 private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
-    ScrollableRow(modifier = modifier) {
-        val padding = 8.dp
-        Row(Modifier.padding(start = padding * 2, end = padding)) {
-            tags.forEach {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.caption,
-                    modifier = Modifier
-                        .border(
-                            1.dp,
-                            AmbientContentColor.current.copy(alpha = ContentAlpha.disabled),
-                            CircleShape
-                        )
-                        .padding(padding)
-                )
-                Spacer(Modifier.size(padding))
-            }
+    val padding = 8.dp
+    LazyRow(
+        modifier = modifier,
+        contentPadding = PaddingValues(start = padding * 2, end = padding),
+        horizontalArrangement = Arrangement.spacedBy(padding)
+    ) {
+        items(tags) {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.caption,
+                modifier = Modifier
+                    .border(
+                        1.dp,
+                        AmbientContentColor.current.copy(alpha = ContentAlpha.disabled),
+                        CircleShape
+                    )
+                    .padding(padding)
+            )
         }
     }
 }

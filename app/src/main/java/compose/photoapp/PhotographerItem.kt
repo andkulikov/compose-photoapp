@@ -16,9 +16,7 @@
 
 package compose.photoapp
 
-import androidx.compose.animation.animatedFloat
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,12 +33,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
-import androidx.compose.runtime.onActive
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.drawLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -53,8 +50,7 @@ fun PhotographerCard(
 ) {
     val padding = 16.dp
     Column(
-        modifier.drawLayer()
-            .clickable(onClick = onClick)
+        modifier.clickable(onClick = onClick)
             .padding(
                 top = padding / 2,
                 start = padding,
@@ -65,12 +61,13 @@ fun PhotographerCard(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            FadeInImage(
-                id = photographer.avatar,
+            Image(
+                painter = painterResource(id = photographer.avatar),
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                contentDescription = "avatar"
             )
             Spacer(Modifier.size(padding))
             Column {
@@ -84,19 +81,12 @@ fun PhotographerCard(
             }
         }
         Spacer(Modifier.size(padding))
-        val alpha = animatedFloat(0f)
-        onActive {
-            alpha.animateTo(
-                1f, tween(
-                    durationMillis = 300,
-                    easing = LinearOutSlowInEasing
-                )
-            )
-        }
         Card(elevation = 4.dp) {
-            FadeInImage(
-                photographer.mainImage,
-                Modifier.fillMaxWidth().height(250.dp)
+            Image(
+                painterResource(id = photographer.mainImage),
+                contentDescription = "main image",
+                modifier = Modifier.fillMaxWidth().height(250.dp),
+                contentScale = ContentScale.Crop
             )
         }
     }

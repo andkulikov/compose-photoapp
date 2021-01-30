@@ -19,11 +19,11 @@ package compose.photoapp
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.onActive
+import androidx.compose.runtime.DisposableEffect
 
 @Composable
 fun BackPressedHandler(dispatcher: OnBackPressedDispatcher, callback: () -> Unit) {
-    onActive {
+    DisposableEffect(dispatcher, callback) {
         val backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 callback.invoke()

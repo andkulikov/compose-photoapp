@@ -16,6 +16,7 @@
 
 package compose.photoapp
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -24,7 +25,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -33,7 +36,12 @@ fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
         content = {
             require(images.size >= 6) { "Requires 6 photos for the grid." }
             images.subList(0, 6).forEach {
-                FadeInImage(it, Modifier.aspectRatio(1f).clip(RoundedCornerShape(16.dp)))
+                Image(
+                    painterResource(id = it),
+                    modifier = Modifier.aspectRatio(1f).clip(RoundedCornerShape(16.dp)),
+                    contentDescription = "photo",
+                    contentScale = ContentScale.Crop
+                )
             }
         },
         modifier = modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally)

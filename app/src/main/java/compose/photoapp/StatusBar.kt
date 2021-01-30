@@ -21,7 +21,7 @@ import android.view.View
 import android.view.Window
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.onCommit
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 
@@ -29,10 +29,13 @@ import androidx.compose.ui.graphics.toArgb
 fun StatusBarBasedOnTheme(window: Window) {
     val color = MaterialTheme.colors.onSurface
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        onCommit(color) {
+        DisposableEffect(color) {
             window.statusBarColor = color.toArgb()
             val isLight = color.luminance() > 0.5f
-            window.decorView.systemUiVisibility = if (isLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility =
+                if (isLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
+            onDispose {}
         }
     }
 }

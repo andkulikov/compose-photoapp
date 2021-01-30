@@ -16,12 +16,11 @@
 
 package compose.photoapp
 
-import androidx.compose.animation.DpPropKey
-import androidx.compose.animation.animate
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.transitionDefinition
-import androidx.compose.animation.transition
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,7 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -63,13 +62,13 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
         divider = {}
     ) {
         groups.forEachIndexed { index, group ->
-            val color = animate(
+            val color = animateColorAsState(
                 if (selectedGroup == group) MaterialTheme.colors.primary else
                     MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)
             )
             Tab(
                 selected = index == selectedIndex,
-                text = { Text(text = group, color = color) },
+                text = { Text(text = group, color = color.value) },
                 onClick = { onSelected(group) },
                 selectedContentColor = MaterialTheme.colors.surface
             )
@@ -83,30 +82,20 @@ private fun TabIndicatorContainer(
     selectedIndex: Int,
     content: @Composable() () -> Unit
 ) {
-    val indicatorOffset = remember { DpPropKey() }
+    val transition = updateTransition(targetState = selectedIndex)
 
-    val transitionDefinition = remember(tabPositions) {
-        transitionDefinition<Int> {
-            tabPositions.forEachIndexed { index, position ->
-                state(index) {
-                    this[indicatorOffset] = (position.left + position.right) / 2
-                }
-            }
-            transition {
-                indicatorOffset using spring<Dp>(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
-                    stiffness = Spring.StiffnessLow
-                )
-            }
-        }
+    val offset = transition.animateDp(transitionSpec = {
+        spring(dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow)
+    }) {
+        val position = tabPositions[it]
+        (position.left + position.right) / 2
     }
 
-    val transitionState = transition(transitionDefinition, selectedIndex)
     Box(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.BottomStart)
-            .offset(x = transitionState[indicatorOffset], y = (-2).dp)
+            .offset { IntOffset(x = offset.value.toIntPx(), y = (-2).dp.toIntPx()) }
     ) {
         content()
     }
