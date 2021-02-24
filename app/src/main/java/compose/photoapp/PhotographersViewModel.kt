@@ -17,11 +17,9 @@
 package compose.photoapp
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-@ExperimentalCoroutinesApi
 class PhotographersViewModel : ViewModel() {
 
     private val _photographers = MutableStateFlow<List<Photographer>>(emptyList())

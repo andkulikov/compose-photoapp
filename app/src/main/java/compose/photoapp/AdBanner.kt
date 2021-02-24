@@ -21,12 +21,13 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.Composition
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.staticAmbientOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.AmbientContext
-import androidx.compose.ui.platform.AmbientLifecycleOwner
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
@@ -39,18 +40,18 @@ import com.google.android.gms.ads.MobileAds
 
 @Composable
 fun AdBanner() {
-    val adProvider = AmbientAdProvider.current
-    AndroidView(modifier = Modifier.padding(16.dp), viewBlock = {
+    val adProvider = LocalAdProvider.current
+    AndroidView(modifier = Modifier.padding(16.dp), factory = {
         adProvider.getAdView()
     })
 }
 
 @Composable
 fun ProvideAdProvider(content: @Composable() () -> Unit) {
-    val context = AmbientContext.current
-    val lifecycle = AmbientLifecycleOwner.current.lifecycle
-    Providers(
-        AmbientAdProvider provides remember { AdProvider(context, lifecycle) },
+    val context = LocalContext.current
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    CompositionLocalProvider(
+        LocalAdProvider provides remember { AdProvider(context, lifecycle) },
         content = content
     )
 }
@@ -93,4 +94,4 @@ class AdProvider(private val context: Context, private val lifecycle: Lifecycle)
     }
 }
 
-val AmbientAdProvider = staticAmbientOf<AdProvider>()
+val LocalAdProvider = staticCompositionLocalOf<AdProvider> { error("No value") }

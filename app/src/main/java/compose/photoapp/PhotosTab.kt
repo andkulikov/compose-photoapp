@@ -25,7 +25,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.preferredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
@@ -54,7 +54,7 @@ fun PhotosTab(groups: List<String>, selectedGroup: String, onSelected: (String) 
             TabIndicatorContainer(positions, groups.indexOf(selectedGroup)) {
                 // circle indicator
                 val color = MaterialTheme.colors.primary
-                Canvas(Modifier.preferredSize(4.dp)) {
+                Canvas(Modifier.size(4.dp)) {
                     drawCircle(color)
                 }
             }
@@ -95,7 +95,7 @@ private fun TabIndicatorContainer(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.BottomStart)
-            .offset { IntOffset(x = offset.value.toIntPx(), y = (-2).dp.toIntPx()) }
+            .offset { IntOffset(x = offset.value.roundToPx(), y = (-2).dp.roundToPx()) }
     ) {
         content()
     }

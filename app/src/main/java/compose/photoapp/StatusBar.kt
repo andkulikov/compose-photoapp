@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 
 @Composable
-fun StatusBarBasedOnTheme(window: Window) {
+fun StatusBarColorProvider(window: Window) {
     val color = MaterialTheme.colors.onSurface
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         DisposableEffect(color) {

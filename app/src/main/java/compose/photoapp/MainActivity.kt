@@ -18,12 +18,15 @@ package compose.photoapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.animation.Crossfade
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.viewinterop.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -34,22 +37,24 @@ class MainActivity : ComponentActivity() {
         setContent {
             ProvideAdProvider {
                 PhotoAppTheme {
-                    val viewModel = viewModel<PhotographersViewModel>()
-                    var selectedId by savedInstanceState<String?> { null }
-                    Crossfade(current = selectedId) { id ->
-                        if (id == null) {
-                            Feed(
-                                viewModel.photographers,
-                                onSelected = { selectedId = it.id }
-                            )
-                        } else {
-                            Profile(viewModel.getById(id))
-                            BackPressedHandler(onBackPressedDispatcher) {
-                                selectedId = null
+                    StatusBarColorProvider(window)
+                    Surface(color = MaterialTheme.colors.onSurface) {
+                        val viewModel = viewModel<PhotographersViewModel>()
+                        var selectedId by rememberSaveable { mutableStateOf<String?>(null) }
+                        Crossfade(targetState = selectedId) { id ->
+                            if (id == null) {
+                                Feed(
+                                    viewModel.photographers,
+                                    onSelected = { selectedId = it.id }
+                                )
+                            } else {
+                                Profile(viewModel.getById(id))
+                                BackPressedHandler(onBackPressedDispatcher) {
+                                    selectedId = null
+                                }
                             }
                         }
                     }
-                    StatusBarBasedOnTheme(window)
                 }
             }
         }

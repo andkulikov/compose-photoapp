@@ -20,13 +20,16 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 
 @Composable
 fun BackPressedHandler(dispatcher: OnBackPressedDispatcher, callback: () -> Unit) {
-    DisposableEffect(dispatcher, callback) {
+    val currentCallback by rememberUpdatedState(callback)
+    DisposableEffect(dispatcher) {
         val backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                callback.invoke()
+                currentCallback.invoke()
             }
         }
         dispatcher.addCallback(backPressedCallback)

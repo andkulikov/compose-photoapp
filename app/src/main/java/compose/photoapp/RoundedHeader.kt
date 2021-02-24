@@ -47,7 +47,7 @@ fun RoundedHeader(title: String) {
 @Preview
 @Composable
 fun RoundedHeaderPreview() {
-    MaterialTheme {
+    PhotoAppTheme {
         RoundedHeader(title = "Header")
     }
 }

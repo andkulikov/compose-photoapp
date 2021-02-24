@@ -26,13 +26,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.AmbientContentAlpha
 import androidx.compose.material.Card
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -75,7 +76,7 @@ fun PhotographerCard(
                     photographer.name,
                     style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Medium)
                 )
-                Providers(AmbientContentAlpha provides ContentAlpha.medium) {
+                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(photographer.lastSeenOnline, style = MaterialTheme.typography.caption)
                 }
             }
@@ -106,7 +107,9 @@ fun PhotographerItemPreview() {
         emptyList(),
         emptyMap()
     )
-    MaterialTheme {
-        PhotographerCard(demoPhotographer, {})
+    PhotoAppTheme {
+        Surface {
+            PhotographerCard(demoPhotographer, {})
+        }
     }
 }

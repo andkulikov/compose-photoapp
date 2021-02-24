@@ -24,10 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 
-@ExperimentalCoroutinesApi
 @Composable
 fun Feed(
     photographersFlow: StateFlow<List<Photographer>>,

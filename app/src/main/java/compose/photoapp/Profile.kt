@@ -22,17 +22,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.AmbientContentColor
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -66,7 +68,7 @@ private fun PortfolioCard(groupedPhotos: Map<String, List<Int>>) {
     RoundedHeader(title = "Portfolio")
     Surface {
         Column {
-            var selectedGroup by savedInstanceState { groups.first() }
+            var selectedGroup by rememberSaveable { mutableStateOf(groups.first()) }
             PhotosTab(
                 groups = groups,
                 selectedGroup = selectedGroup,
@@ -95,7 +97,7 @@ private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .border(
                         1.dp,
-                        AmbientContentColor.current.copy(alpha = ContentAlpha.disabled),
+                        LocalContentColor.current.copy(alpha = ContentAlpha.disabled),
                         CircleShape
                     )
                     .padding(padding)
@@ -104,7 +106,7 @@ private fun TagsList(tags: List<String>, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+@Preview(widthDp = 200)
 @Composable
 fun TagPreview() {
     val demoPhotographer = Photographer(
@@ -115,10 +117,12 @@ fun TagPreview() {
         R.drawable.image1,
         "101k",
         "894",
-        listOf("travel", "urban", "fashion", "food"),
+        listOf("travel", "urban", "fashion", "food", "mood", "home"),
         emptyMap()
     )
-    MaterialTheme {
-        TagsList(demoPhotographer.tags)
+    PhotoAppTheme {
+        Surface {
+            TagsList(demoPhotographer.tags)
+        }
     }
 }

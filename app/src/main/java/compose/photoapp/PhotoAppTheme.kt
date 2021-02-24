@@ -16,6 +16,7 @@
 
 package compose.photoapp
 
+import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button

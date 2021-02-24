@@ -46,7 +46,7 @@ fun PhotosGrid(images: List<Int>, modifier: Modifier = Modifier) {
         },
         modifier = modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally)
     ) { measurables, constraints ->
-        val padding = 8.dp.toIntPx()
+        val padding = 8.dp.roundToPx()
 
         // to cover small screens
         val minDimension = minOf(constraints.maxHeight, constraints.maxWidth)
