@@ -49,11 +49,21 @@ android {
 }
 
 dependencies {
+    // the main Compose dependency
     implementation "androidx.compose.material:material:$compose_release_version"
+
+    // for Previews
     implementation "androidx.compose.ui:ui-tooling:$compose_release_version"
+
+    // for using Compose in ComponentActivity
     implementation "androidx.activity:activity-compose:1.3.0-alpha06"
+
+    // for using ViewModel in Compose
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha04'
 
-    // for the AdView
+    // for updating the status bar color from Compose
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.7.1"
+
+    // for AdView
     implementation "com.google.android.gms:play-services-ads:20.0.0"
 }

@@ -27,9 +27,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ProvideAdProvider {
                 PhotoAppTheme {
-                    StatusBarColorProvider(window)
+                    StatusBarColorProvider()
                     Surface(color = MaterialTheme.colors.onSurface) {
                         val viewModel = viewModel<PhotographersViewModel>()
                         var selectedId by rememberSaveable { mutableStateOf<String?>(null) }

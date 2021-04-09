@@ -22,20 +22,20 @@ import android.view.Window
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
+import com.google.accompanist.systemuicontroller.LocalSystemUiController
+import com.google.accompanist.systemuicontroller.rememberAndroidSystemUiController
 
 @Composable
-fun StatusBarColorProvider(window: Window) {
+fun StatusBarColorProvider() {
+    val systemUiController = rememberAndroidSystemUiController()
     val color = MaterialTheme.colors.onSurface
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        DisposableEffect(color) {
-            window.statusBarColor = color.toArgb()
-            val isLight = color.luminance() > 0.5f
-            @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility =
-                if (isLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
-            onDispose {}
+        SideEffect {
+            systemUiController.setSystemBarsColor(color = color)
         }
     }
 }
