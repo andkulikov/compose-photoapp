@@ -55,7 +55,7 @@ dependencies {
     // for Previews
     implementation "androidx.compose.ui:ui-tooling:$compose_release_version"
 
-    // for using Compose in ComponentActivity
+    // for using Compose in ComponentActivity and BackHandler
     implementation "androidx.activity:activity-compose:1.3.0-alpha06"
 
     // for using ViewModel in Compose

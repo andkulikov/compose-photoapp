@@ -18,6 +18,7 @@ package compose.photoapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.Crossfade
 import androidx.compose.material.MaterialTheme
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             } else {
                                 Profile(viewModel.getById(id))
-                                BackPressedHandler(onBackPressedDispatcher) {
+                                BackHandler {
                                     selectedId = null
                                 }
                             }
