@@ -19,7 +19,7 @@ plugins {
     id 'kotlin-android'
 }
 
-def compose_release_version = "1.0.0-beta04"
+def compose_release_version = "1.0.0-beta05"
 
 android {
     compileSdkVersion 30
@@ -56,13 +56,13 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling:$compose_release_version"
 
     // for using Compose in ComponentActivity and BackHandler
-    implementation "androidx.activity:activity-compose:1.3.0-alpha06"
+    implementation "androidx.activity:activity-compose:1.3.0-alpha07"
 
     // for using ViewModel in Compose
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha04'
 
     // for updating the status bar color from Compose
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.7.1"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.8.0"
 
     // for AdView
     implementation "com.google.android.gms:play-services-ads:20.0.0"
