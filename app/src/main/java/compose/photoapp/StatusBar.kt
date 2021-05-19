@@ -16,26 +16,17 @@
 
 package compose.photoapp
 
-import android.os.Build
-import android.view.View
-import android.view.Window
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
-import com.google.accompanist.systemuicontroller.LocalSystemUiController
-import com.google.accompanist.systemuicontroller.rememberAndroidSystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun StatusBarColorProvider() {
-    val systemUiController = rememberAndroidSystemUiController()
+    val systemUiController = rememberSystemUiController()
     val color = MaterialTheme.colors.onSurface
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        SideEffect {
-            systemUiController.setSystemBarsColor(color = color)
-        }
+    SideEffect {
+        systemUiController.setSystemBarsColor(color = color)
     }
 }
