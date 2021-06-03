@@ -26,7 +26,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.MaterialTheme
@@ -37,6 +37,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,13 +52,15 @@ fun PhotographerCard(
 ) {
     val padding = 16.dp
     Column(
-        modifier.clickable(onClick = onClick)
+        modifier
+            .clickable(onClick = onClick)
             .padding(
                 top = padding / 2,
                 start = padding,
                 end = padding,
                 bottom = padding / 2
-            ).fillMaxWidth()
+            )
+            .fillMaxWidth()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -82,14 +85,15 @@ fun PhotographerCard(
             }
         }
         Spacer(Modifier.size(padding))
-        Card(elevation = 4.dp) {
-            Image(
-                painterResource(id = photographer.mainImage),
-                contentDescription = "main image",
-                modifier = Modifier.fillMaxWidth().height(250.dp),
-                contentScale = ContentScale.Crop
-            )
-        }
+        Image(
+            painterResource(id = photographer.mainImage),
+            contentDescription = "main image",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+                .shadow(elevation = 4.dp, clip = true, shape = RoundedCornerShape(4.dp)),
+            contentScale = ContentScale.Crop
+        )
     }
 }
 
