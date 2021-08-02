@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -48,16 +47,18 @@ fun Profile(photographer: Photographer, modifier: Modifier = Modifier) {
         color = MaterialTheme.colors.onSurface,
         contentColor = MaterialTheme.colors.surface
     ) {
-        Column(Modifier.padding(top = 24.dp)) {
-            Spacer(modifier = Modifier.weight(1f))
-            ProfileHeader(photographer)
-            Spacer(modifier = Modifier.weight(1f))
-            TagsList(
-                photographer.tags,
-                Modifier.padding(top = padding, bottom = padding)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            PortfolioCard(groupedPhotos = photographer.photos)
+        TutorialOverlay { tutorialHighlightModifier ->
+            Column(Modifier.padding(top = 24.dp)) {
+                Spacer(modifier = Modifier.weight(1f))
+                ProfileHeader(photographer, tutorialHighlightModifier)
+                Spacer(modifier = Modifier.weight(1f))
+                TagsList(
+                    photographer.tags,
+                    Modifier.padding(top = padding, bottom = padding)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                PortfolioCard(groupedPhotos = photographer.photos)
+            }
         }
     }
 }

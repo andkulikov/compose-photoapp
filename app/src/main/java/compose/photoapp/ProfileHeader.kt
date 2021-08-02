@@ -37,7 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ProfileHeader(photographer: Photographer) {
+fun ProfileHeader(photographer: Photographer, tutorialHighlightModifier: Modifier) {
     val padding = 16.dp
 
     Row(
@@ -63,7 +63,7 @@ fun ProfileHeader(photographer: Photographer) {
             ) {
                 FollowerInfo(text = "followers", number = photographer.numOfFollowers)
                 FollowerInfo(text = "following", number = photographer.numOfFollowing)
-                Button(onClick = {}, shape = CircleShape) {
+                Button(onClick = {}, shape = CircleShape, modifier = tutorialHighlightModifier) {
                     Text("Follow")
                 }
             }
