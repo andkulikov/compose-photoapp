@@ -24,6 +24,7 @@
         <activity
             android:name=".MainActivity"
             android:label="Photoapp"
+            android:exported="true"
             android:theme="@android:style/Theme.Material.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
