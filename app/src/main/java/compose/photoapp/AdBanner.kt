@@ -68,7 +68,7 @@ class AdProvider(private val context: Context, private val lifecycle: Lifecycle)
     }
 
     private fun createAdView() = AdView(context).apply {
-        adSize = AdSize.MEDIUM_RECTANGLE
+        setAdSize(AdSize.MEDIUM_RECTANGLE)
         adUnitId = "ca-app-pub-3940256099942544/6300978111"
         loadAd(AdRequest.Builder().build())
         layoutParams = LinearLayout.LayoutParams(

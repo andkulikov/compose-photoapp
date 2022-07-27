@@ -19,16 +19,17 @@ plugins {
     id 'kotlin-android'
 }
 
-def compose_release_version = "1.0.4"
+def compose_version = "1.2.0"
+def compose_compiler_version = "1.2.0"
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "compose.photoapp"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
     }
@@ -44,7 +45,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "$compose_release_version"
+        kotlinCompilerExtensionVersion "$compose_compiler_version"
     }
     buildTypes {
         release {
@@ -58,20 +59,20 @@ android {
 
 dependencies {
     // the main Compose dependency
-    implementation "androidx.compose.material:material:$compose_release_version"
+    implementation "androidx.compose.material:material:$compose_version"
 
     // for Previews
-    implementation "androidx.compose.ui:ui-tooling:$compose_release_version"
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
 
     // for using Compose in ComponentActivity and BackHandler
-    implementation "androidx.activity:activity-compose:1.4.0"
+    implementation "androidx.activity:activity-compose:1.5.0"
 
     // for using ViewModel in Compose
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0'
 
     // for updating the status bar color from Compose
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.20.0"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.23.1"
 
     // for AdView
-    implementation "com.google.android.gms:play-services-ads:20.4.0"
+    implementation "com.google.android.gms:play-services-ads:21.1.0"
 }
