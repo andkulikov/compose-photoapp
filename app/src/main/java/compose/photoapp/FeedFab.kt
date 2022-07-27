@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalAnimationApi::class)
-
 package compose.photoapp
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
@@ -31,11 +28,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.State
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -43,7 +38,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FeedFab(state: LazyListState, modifier: Modifier) {
     AnimatedVisibility(
-        visible = state.isScrollingUp,
+        visible = state.isScrollingUp().value,
         modifier = modifier,
         enter = FabEnterAnim,
         exit = FabExitAnim,
@@ -61,25 +56,23 @@ fun FeedFab(state: LazyListState, modifier: Modifier) {
     }
 }
 
-private val LazyListState.isScrollingUp: Boolean
-    @Composable
-    get() {
-        return remember {
-            var lastIndex by mutableStateOf(0)
-            var lastScroll by mutableStateOf(Int.MAX_VALUE)
-            derivedStateOf {
-                val currentIndex = firstVisibleItemIndex
-                val currentScroll = firstVisibleItemScrollOffset
-                val scrollingUp = currentIndex < lastIndex ||
+@Composable
+private fun LazyListState.isScrollingUp(): State<Boolean> {
+    return produceState(initialValue = true) {
+        var lastIndex = 0
+        var lastScroll = Int.MAX_VALUE
+        snapshotFlow {
+            firstVisibleItemIndex to firstVisibleItemScrollOffset
+        }.collect { (currentIndex, currentScroll) ->
+            if (currentIndex != lastIndex || currentScroll != lastScroll) {
+                value = currentIndex < lastIndex ||
                         (currentIndex == lastIndex && currentScroll < lastScroll)
-                if (currentIndex != lastIndex || currentScroll != lastScroll) {
-                    lastIndex = currentIndex
-                    lastScroll = currentScroll
-                }
-                scrollingUp
+                lastIndex = currentIndex
+                lastScroll = currentScroll
             }
-        }.value
+        }
     }
+}
 
 private val FabEnterAnim = slideInVertically(initialOffsetY = { it })
 private val FabExitAnim = slideOutVertically(targetOffsetY = { it })
