@@ -19,17 +19,17 @@ plugins {
     id 'kotlin-android'
 }
 
-def compose_version = "1.2.0"
-def compose_compiler_version = "1.2.0"
+def compose_version = "1.5.0"
+def compose_compiler_version = "1.5.3"
 
 android {
-    compileSdkVersion 32
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 34
+    buildToolsVersion "33.0.1"
 
     defaultConfig {
         applicationId "compose.photoapp"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
     }
@@ -55,6 +55,7 @@ android {
                     'proguard-rules.pro'
         }
     }
+    namespace 'compose.photoapp'
 }
 
 dependencies {
